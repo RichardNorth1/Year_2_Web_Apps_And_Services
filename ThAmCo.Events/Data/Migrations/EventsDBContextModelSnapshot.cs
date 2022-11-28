@@ -26,6 +26,10 @@ namespace ThAmCo.Events.Data.Migrations
                     b.Property<int>("ClientReferenceId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("EventName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("EventTypeId")
                         .HasMaxLength(3)
                         .HasColumnType("TEXT");
@@ -43,13 +47,17 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             EventId = 1,
                             ClientReferenceId = 1,
-                            EventTypeId = ""
+                            EventName = "The North Family Birthday bash",
+                            EventTypeId = "PTY",
+                            Reference = "Reference1234"
                         },
                         new
                         {
                             EventId = 2,
                             ClientReferenceId = 2,
-                            EventTypeId = ""
+                            EventName = "The annual golf meet up",
+                            EventTypeId = "MET",
+                            Reference = "Reference2345"
                         });
                 });
 

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Y8vgjvAsDRyNNsoDcMFQ2z8rNr0BgY2i0J/8Mb82DjQ=",
+  "Hash": "TfxFV3aKvJWh/abJ8x15GFrSYFwr1l+7Y5UUc/mBWx8=",
   "Source": "ThAmCo.Events",
   "BasePath": "_content/ThAmCo.Events",
   "Mode": "Default",
@@ -95,6 +95,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Student\\OneDrive - Teesside University\\Year 2\\Web Apps and Services\\ICA Work\\ThAmCo\\ThAmCo\\ThAmCo.Events\\wwwroot\\js\\checkAvailability.js",
+      "SourceId": "ThAmCo.Events",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Student\\OneDrive - Teesside University\\Year 2\\Web Apps and Services\\ICA Work\\ThAmCo\\ThAmCo\\ThAmCo.Events\\wwwroot\\",
+      "BasePath": "_content/ThAmCo.Events",
+      "RelativePath": "js/checkAvailability.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\checkAvailability.js"
     },
     {
       "Identity": "C:\\Users\\Student\\OneDrive - Teesside University\\Year 2\\Web Apps and Services\\ICA Work\\ThAmCo\\ThAmCo\\ThAmCo.Events\\wwwroot\\js\\site.js",

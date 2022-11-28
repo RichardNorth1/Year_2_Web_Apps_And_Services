@@ -11,14 +11,21 @@ namespace ThAmCo.Events.Data
         {
         }
 
-        public Event(int eventId, int clientReferenceId)
+        public Event(int eventId, string eventName,
+            int clientReferenceId, string reference, 
+            string eventTypeId)
         {
             EventId = eventId;
+            EventName = eventName;
             ClientReferenceId = clientReferenceId;
+            Reference = reference;
+            EventTypeId = eventTypeId;
         }
 
         [Key]
         public int EventId { get; set; }
+        [Required]
+        public string EventName { get; set; }
         // ID from food booking table in the catering DB
         public int ClientReferenceId { get; set; }
         // Id from the event type table in venues DB
@@ -27,8 +34,6 @@ namespace ThAmCo.Events.Data
 
         [MinLength(3), MaxLength(3)]
         public string EventTypeId { get; set; } = string.Empty;
-
-
         public List<GuestBooking> GuestBookings{ get; set; }
         public List<Staffing> Staffs { get; set; }
     }

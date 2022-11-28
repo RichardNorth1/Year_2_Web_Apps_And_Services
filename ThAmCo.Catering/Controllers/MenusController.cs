@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Catering.Data;
+using ThAmCo.Catering.Models;
 
 namespace ThAmCo.Catering.Controllers
 {
@@ -22,14 +23,17 @@ namespace ThAmCo.Catering.Controllers
 
         // GET: api/Menus
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Menu>>> GetMenu()
+        public async Task<ActionResult<IEnumerable<MenuDto>>> GetMenu()
         {
-            return await _context.Menu.ToListAsync();
+            var menus = await _context.Menu.ToListAsync();
+            var DTO = menus.Select(m => new MenuDto(m)).ToList();
+
+            return DTO;
         }
 
         // GET: api/Menus/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Menu>> GetMenu(int id)
+        public async Task<ActionResult<MenuDto>> GetMenu(int id)
         {
             var menu = await _context.Menu.FindAsync(id);
 
@@ -38,7 +42,8 @@ namespace ThAmCo.Catering.Controllers
                 return NotFound();
             }
 
-            return menu;
+            return new MenuDto(menu);
+
         }
 
         // PUT: api/Menus/5

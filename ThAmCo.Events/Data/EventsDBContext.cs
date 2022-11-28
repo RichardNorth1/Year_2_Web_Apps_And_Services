@@ -74,9 +74,13 @@ namespace ThAmCo.Events.Data
 
             modelBuilder.Entity<Event>()
                 .HasData(
-                new Event(1, 1),
-                new Event(2, 2)
+                //20221107CRKHL
+                new Event(1, "The North Family Birthday bash", 1, "Reference1234", "PTY"),
+                //20221106TNDMR
+                new Event(2, "The annual golf meet up", 2, "Reference2345", "MET")
                 );
+
+
 
             modelBuilder.Entity<Guest>()
                 .HasData(

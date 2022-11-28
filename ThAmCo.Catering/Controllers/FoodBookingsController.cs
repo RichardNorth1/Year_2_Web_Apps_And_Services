@@ -20,19 +20,52 @@ namespace ThAmCo.Catering.Controllers
         {
             _context = context;
         }
+        // GET: api/FoodBookings/FullBooking
+        [HttpGet("FullBooking")]
+        public async Task<ActionResult<IEnumerable<FullFoodBookingDto>>> GetFullBooking()
+        {
+            var DTO = new List<FullFoodBookingDto>();
+            var allFoodBookings = await _context.FoodBooking.ToListAsync();
+            foreach (var foodbooking in allFoodBookings)
+            {
+                var Menu = await _context.Menu.FindAsync(foodbooking.MenuId);
+                var MenuItems = await _context.MenuFoodItem.Where(m => m.MenuId == foodbooking.MenuId).ToListAsync();
+                var FoodItems = new List<FoodItemDto>();
+                foreach(var MenuItem in MenuItems)
+                {
+                    var FoodItem = await _context.FoodItem.FindAsync(MenuItem.FoodItemId);
+                    FoodItems.Add(new FoodItemDto(FoodItem));
+                }
+                DTO.Add(new FullFoodBookingDto(foodbooking, Menu, FoodItems));
+            }
+            return DTO;
+        }
+
+        // GET: api/FoodBookings/FullBooking/5
+        [HttpGet("FullBooking/{foodBookingId}")]
+        public async Task<ActionResult<FullFoodBookingDto>> GetFullBooking(int foodBookingId)
+        {
+            var FoodBooking = await _context.FoodBooking.FindAsync(foodBookingId);
+
+            var Menu = await _context.Menu.FindAsync(FoodBooking.MenuId);
+            var MenuItems = await _context.MenuFoodItem.Where(m => m.MenuId == Menu.MenuId).ToListAsync();
+            var FoodItems = new List<FoodItemDto>();
+            foreach (var MenuItem in MenuItems)
+            {
+                var FoodItem = await _context.FoodItem.FindAsync(MenuItem.FoodItemId);
+                FoodItems.Add(new FoodItemDto(FoodItem));
+            }
+            var DTO = new FullFoodBookingDto(FoodBooking, Menu, FoodItems);
+            
+            return DTO;
+        }
 
         // GET: api/FoodBookings
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FoodBookingDTO>>> GetFoodBooking()
         {
             var allFoodBookings = await _context.FoodBooking.ToListAsync();
-            var DTO = allFoodBookings.Select(fb => new FoodBookingDTO
-            {
-                FoodBookingId = fb.FoodBookingId,
-                ClientReferenceId = fb.ClientReferenceId,
-                NumberOfGuests = fb.NumberOfGuests,
-                MenuId = fb.MenuId
-            }).ToList();
+            var DTO = allFoodBookings.Select(fb => new FoodBookingDTO(fb)).ToList();
 
             return DTO;
         }
@@ -48,16 +81,7 @@ namespace ThAmCo.Catering.Controllers
                 return NotFound();
             }
 
-            var foodBookingDto = new FoodBookingDTO
-            {
-                FoodBookingId = foodBooking.FoodBookingId,
-                ClientReferenceId = foodBooking.ClientReferenceId,
-                NumberOfGuests = foodBooking.NumberOfGuests,
-                MenuId = foodBooking.MenuId
-
-            };
-
-            return foodBookingDto;
+            return new FoodBookingDTO(foodBooking);
         }
 
         // PUT: api/FoodBookings/5

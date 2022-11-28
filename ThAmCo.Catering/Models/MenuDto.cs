@@ -5,13 +5,26 @@ namespace ThAmCo.Catering.Models
 {
     public class MenuDto
     {
+        public MenuDto()
+        {
+        }
 
+        public MenuDto(Menu m)
+        {
+            MenuId = m.MenuId;
+            MenuName = m.MenuName;
+        }
 
-        [Key]
+        public MenuDto(int menuId, string menuName, List<MenuFoodItemDto> menuItemsDto)
+        {
+            MenuId = menuId;
+            MenuName = menuName;
+            MenuItemsDto = menuItemsDto;
+        }
+
         public int MenuId { get; set; }
-        [Required, MaxLength(50)]
-        public string MenuName { get; set; }
-        public List<MenuFoodItem> MenuItems { get; set; }
 
+        public string MenuName { get; set; }
+        public List<MenuFoodItemDto> MenuItemsDto { get; set; }
     }
 }
