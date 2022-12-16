@@ -28,6 +28,7 @@ namespace ThAmCo.Events.Data
         public int? Telephone { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
+        public bool IsDeleted { get; set; }
         public List<GuestBooking> Events { get; set; }
 
     }

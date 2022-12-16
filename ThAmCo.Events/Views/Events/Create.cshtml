@@ -13,41 +13,35 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <select asp-for="EventTypeId" class="form-control" asp-items="Model.EventTypeList">
-                </select>
-                <span asp-validation-for="EventTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EventDateStart" class="control-label">start date:</label>
-                <input asp-for="EventDateStart" class="form-control" type="date" />
-            </div>
-            <div class="form-group">
-                <label asp-for="EventDateEnd" class="control-label">end date:</label>
-                <input asp-for="EventDateEnd" class="form-control" type="date" />
-                <button id="button_1" class="btn btn-primary">Check availability</button>
-            </div>
-            <div class="form-group">
-                <label for="EventDate" class="control-label">Available Dates:</label>
-                <select id="EventDate" class="form-control" disabled="disabled"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="EventName" class="control-label"></label>
+                <label asp-for="EventName" class="control-label">Event Name:</label>
                 <input asp-for="EventName" class="form-control" />
                 <span asp-validation-for="EventName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ClientReferenceId" class="control-label"></label>
-                <input asp-for="ClientReferenceId" class="form-control" />
-                <span asp-validation-for="ClientReferenceId" class="text-danger"></span>
+                <label asp-for="SelectedEventTypeId" class="control-label">Event Types:</label>
+                <select  asp-for="SelectedEventTypeId" class="form-control"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Reference" class="control-label"></label>
-                <input asp-for="Reference" class="form-control" />
-                <span asp-validation-for="Reference" class="text-danger"></span>
+                <label asp-for="EventDateStart" class="control-label">Start Date:</label>
+                <input asp-for="EventDateStart" class="form-control" type="date" />
+            </div>
+            <div class="form-group">
+                <label asp-for="EventDateEnd" class="control-label">End Date:</label>
+                <input asp-for="EventDateEnd" class="form-control" type="date" />
+                <button id="Availability_btn" class="btn btn-primary">Check availability</button>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedEventDate" class="control-label">Available Dates:</label>
+                <select asp-for="SelectedEventDate" class="form-control" disabled="disabled"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedMenuId" class="control-label">Menus:</label>
+                <select asp-for="SelectedMenuId" class="form-control"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
         </form>
     </div>
 </div>
@@ -57,42 +51,7 @@
 </div>
 
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#button_1").click(function () {
-                alert("url was successful");
-                function loadAvailableDates() {
-                    $.ajax({
-                        //api/Availability?eventType=WED&beginDate=2022-11-01&endDate=2022-11-30
-                        url: "https://localhost:7088/api/Availability?eventType=" + $("#EventTypeId") + "&beginDate=" 
-                                + $("#EventDateStart") + "&endDate=" + $("#EventDateEnd")
-                                type: "GET",
-                        success: function (result) {
-                            alert("url was successful");
-                            $('#EventDate').html('');     // Empty select list
-                            var options = '';
-                            options += '<option value="Select">Select</option>';
-                            for (var i = 0; i < result.length; i++) {
-                                options += '<option value="' + result[i].date + '">' +
-                                    result[i].date + " " + result[i].name + " " +
-                                    result[i].capacity + " " + result[i].costPerHour +
-                                    '</option>';
-                            }
-                            $('#EventDate').append(options);
-                            $('#EventDate').removeAttr("disabled")
-                        },
-                        error: function () {
-                            alert("Unable to load available venues and dates.");
-                        }
-                    });
-
-                    $('#EventDate').removeAttr("disabled")
-                    loadAvailableDates();
-                });
-        });
-    </script>
-    <script></script>
-    <script type="text/javascript" src="~/js/checkAvailability.js"></script>
+    <script type="text/javascript" src="~/js/CreateEvent.js"></script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

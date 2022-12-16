@@ -8,13 +8,14 @@
 
         public FullFoodBookingDto(FullFoodBookingDto fb)
         {
+            FoodBookingId = fb.FoodBookingId;
             ClientReferenceId = fb.ClientReferenceId;
             NumberOfGuests = fb.NumberOfGuests;
             MenuId = fb.MenuId;
             MenuName = fb.MenuName;
             MenuItems = fb.MenuItems;
         }
-
+        public int FoodBookingId { get; internal set; }
         public int ClientReferenceId { get; set; }
 
         public int NumberOfGuests { get; set; }
@@ -25,5 +26,6 @@
 
         public string MenuName { get; set; }
         public List<FoodItemDto> MenuItems { get; set; }
+
     }
 }

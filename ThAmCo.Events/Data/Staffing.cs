@@ -16,5 +16,6 @@
         public Staff Staff { get; set; }
         public int EventId { get; set; }
         public Event Event { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

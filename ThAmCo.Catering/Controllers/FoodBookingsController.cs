@@ -20,45 +20,45 @@ namespace ThAmCo.Catering.Controllers
         {
             _context = context;
         }
-        // GET: api/FoodBookings/FullBooking
-        [HttpGet("FullBooking")]
-        public async Task<ActionResult<IEnumerable<FullFoodBookingDto>>> GetFullBooking()
-        {
-            var DTO = new List<FullFoodBookingDto>();
-            var allFoodBookings = await _context.FoodBooking.ToListAsync();
-            foreach (var foodbooking in allFoodBookings)
-            {
-                var Menu = await _context.Menu.FindAsync(foodbooking.MenuId);
-                var MenuItems = await _context.MenuFoodItem.Where(m => m.MenuId == foodbooking.MenuId).ToListAsync();
-                var FoodItems = new List<FoodItemDto>();
-                foreach(var MenuItem in MenuItems)
-                {
-                    var FoodItem = await _context.FoodItem.FindAsync(MenuItem.FoodItemId);
-                    FoodItems.Add(new FoodItemDto(FoodItem));
-                }
-                DTO.Add(new FullFoodBookingDto(foodbooking, Menu, FoodItems));
-            }
-            return DTO;
-        }
+        //// GET: api/FoodBookings/FullBooking
+        //[HttpGet("FullBooking")]
+        //public async Task<ActionResult<IEnumerable<FullFoodBookingDto>>> GetFullBooking()
+        //{
+        //    var DTO = new List<FullFoodBookingDto>();
+        //    var allFoodBookings = await _context.FoodBooking.ToListAsync();
+        //    foreach (var foodbooking in allFoodBookings)
+        //    {
+        //        var Menu = await _context.Menu.FindAsync(foodbooking.MenuId);
+        //        var MenuItems = await _context.MenuFoodItem.Where(m => m.MenuId == foodbooking.MenuId).ToListAsync();
+        //        var FoodItems = new List<FoodItemDto>();
+        //        foreach(var MenuItem in MenuItems)
+        //        {
+        //            var FoodItem = await _context.FoodItem.FindAsync(MenuItem.FoodItemId);
+        //            FoodItems.Add(new FoodItemDto(FoodItem));
+        //        }
+        //        DTO.Add(new FullFoodBookingDto(foodbooking, Menu, FoodItems));
+        //    }
+        //    return DTO;
+        //}
 
-        // GET: api/FoodBookings/FullBooking/5
-        [HttpGet("FullBooking/{foodBookingId}")]
-        public async Task<ActionResult<FullFoodBookingDto>> GetFullBooking(int foodBookingId)
-        {
-            var FoodBooking = await _context.FoodBooking.FindAsync(foodBookingId);
+        //// GET: api/FoodBookings/FullBooking/5
+        //[HttpGet("FullBooking/{foodBookingId}")]
+        //public async Task<ActionResult<FullFoodBookingDto>> GetFullBooking(int foodBookingId)
+        //{
+        //    var FoodBooking = await _context.FoodBooking.FindAsync(foodBookingId);
 
-            var Menu = await _context.Menu.FindAsync(FoodBooking.MenuId);
-            var MenuItems = await _context.MenuFoodItem.Where(m => m.MenuId == Menu.MenuId).ToListAsync();
-            var FoodItems = new List<FoodItemDto>();
-            foreach (var MenuItem in MenuItems)
-            {
-                var FoodItem = await _context.FoodItem.FindAsync(MenuItem.FoodItemId);
-                FoodItems.Add(new FoodItemDto(FoodItem));
-            }
-            var DTO = new FullFoodBookingDto(FoodBooking, Menu, FoodItems);
+        //    var Menu = await _context.Menu.FindAsync(FoodBooking.MenuId);
+        //    var MenuItems = await _context.MenuFoodItem.Where(m => m.MenuId == Menu.MenuId).ToListAsync();
+        //    var FoodItems = new List<FoodItemDto>();
+        //    foreach (var MenuItem in MenuItems)
+        //    {
+        //        var FoodItem = await _context.FoodItem.FindAsync(MenuItem.FoodItemId);
+        //        FoodItems.Add(new FoodItemDto(FoodItem));
+        //    }
+        //    var DTO = new FullFoodBookingDto(FoodBooking, Menu, FoodItems);
             
-            return DTO;
-        }
+        //    return DTO;
+        //}
 
         // GET: api/FoodBookings
         [HttpGet]
@@ -72,9 +72,9 @@ namespace ThAmCo.Catering.Controllers
 
         // GET: api/FoodBookings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<FoodBookingDTO>> GetFoodBooking(int id)
+        public async Task<ActionResult<FoodBookingDTO>> GetFoodBooking(int foodBookingId)
         {
-            var foodBooking = await _context.FoodBooking.FindAsync(id);
+            var foodBooking = await _context.FoodBooking.FindAsync(foodBookingId);
 
             if (foodBooking == null)
             {
@@ -87,9 +87,9 @@ namespace ThAmCo.Catering.Controllers
         // PUT: api/FoodBookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFoodBooking(int id, FoodBooking foodBooking)
+        public async Task<IActionResult> PutFoodBooking(int foodBookingId, FoodBooking foodBooking)
         {
-            if (id != foodBooking.FoodBookingId)
+            if (foodBookingId != foodBooking.FoodBookingId)
             {
                 return BadRequest();
             }
@@ -102,7 +102,7 @@ namespace ThAmCo.Catering.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FoodBookingExists(id))
+                if (!FoodBookingExists(foodBookingId))
                 {
                     return NotFound();
                 }
@@ -118,19 +118,24 @@ namespace ThAmCo.Catering.Controllers
         // POST: api/FoodBookings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<FoodBooking>> PostFoodBooking(FoodBooking foodBooking)
+        public async Task<ActionResult<FoodBooking>> PostFoodBooking(FoodBookingDTO foodBookingDto)
         {
+            var foodBooking = new FoodBooking{ 
+                ClientReferenceId = foodBookingDto.ClientReferenceId, 
+                MenuId = foodBookingDto.MenuId, 
+                NumberOfGuests = foodBookingDto.NumberOfGuests };
+
             _context.FoodBooking.Add(foodBooking);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFoodBooking", new { id = foodBooking.FoodBookingId }, foodBooking);
+            return CreatedAtAction("GetFoodBooking", new { foodBookingId = foodBooking.FoodBookingId }, foodBooking);
         }
 
         // DELETE: api/FoodBookings/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFoodBooking(int id)
+        public async Task<IActionResult> DeleteFoodBooking(int foodBookingId)
         {
-            var foodBooking = await _context.FoodBooking.FindAsync(id);
+            var foodBooking = await _context.FoodBooking.FindAsync(foodBookingId);
             if (foodBooking == null)
             {
                 return NotFound();
@@ -142,9 +147,9 @@ namespace ThAmCo.Catering.Controllers
             return NoContent();
         }
 
-        private bool FoodBookingExists(int id)
+        private bool FoodBookingExists(int foodBookingId)
         {
-            return _context.FoodBooking.Any(e => e.FoodBookingId == id);
+            return _context.FoodBooking.Any(e => e.FoodBookingId == foodBookingId);
         }
     }
 }

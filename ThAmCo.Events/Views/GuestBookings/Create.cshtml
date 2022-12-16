@@ -1,4 +1,4 @@
-﻿@model ThAmCo.Events.Data.GuestBooking
+﻿@model ThAmCo.Events.Models.GuestBookingViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -7,30 +7,86 @@
 <h1>Create</h1>
 
 <h4>GuestBooking</h4>
+
+
+
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="GuestId" class="control-label"></label>
-                <select asp-for="GuestId" class ="form-control" asp-items="ViewBag.GuestId"></select>
+                <label asp-for="SelectedGuestId" class="control-label"> Guest Name</label>
+                <select asp-for="SelectedGuestId" asp-items="@Model.GuestSelectList" class="form-control"></select>
+                <span asp-validation-for="SelectedGuestId" class="text-danger"></span>
+                
+                @Html.HiddenFor(gb => gb.EventId)
             </div>
-            <div class="form-group">
-                <label asp-for="EventId" class="control-label"></label>
-                <select asp-for="EventId" class ="form-control" asp-items="ViewBag.EventId"></select>
+            <div>
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        //$(document).ready(function () {
+        //    loadBookedGuests()
+        //    $(document).on("click", "#addGuest", function () {
+        //        alert("youve clicked my button");
+        //    });
+
+        //});
+        ////// Denotes total number of rows.
+        ////var rowIdx = 0;
+
+        ////// jQuery button click event to add a row.
+        ////$('#addBtn').on('click', function () {
+
+        ////    // Adding a row inside the tbody.
+        ////    $('#tbody').append(`<tr id="R${++rowIdx}">
+        ////                  <td class="row-index text-center">
+        ////                        <p>Row ${rowIdx}</p></td>
+        ////                   <td class="text-center">
+        ////                    <button class="btn btn-danger remove"
+        ////                        type="button">Remove</button>
+        ////                    </td>
+        ////                   </tr>`);
+        ////});
+
+        //function loadBookedGuests() {
+        //    $.ajax({
+        //        url: "/UnbookedGuests/" + $("#eventId"),
+        //        type: "GET",
+
+        //        success: function (result) {
+                    
+        //            //$('#SelectedEventTypeId').html('');     // Empty select list
+        //            var rows = '';
+        //            //options += '<option value="Select">Select venue</option>';
+
+        //            for (var i = 0; i < result.length; i++) {
+        //                rows += '<tr id="my_tr">'
+        //                + '<td>' + result[i].fullName +'</td>' 
+        //                + '<td>' + result[i].email + '</td>' 
+        //                + '<td>'
+        //                + '<button id="my_button"class="addGuest btn btn-primary" value="'+ result[i].guestId + '">add guest to booking</button>'
+        //                // add button
+        //                +'</td>' + '</tr>' ;
+        //            }
+        //            $('#my_table').append(rows);
+        //            alert(options);
+        //        },
+        //        error: function () {
+        //            alert("Unable to load event types.");
+        //        }
+        //    });
+        //}
+    </script>
 }

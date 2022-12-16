@@ -105,12 +105,12 @@ namespace ThAmCo.Events.Data
 
             modelBuilder.Entity<Staff>()
                 .HasData(
-                new Staff(1, "Chelsea", "Copland", EmployeeType.MANAGER, "chelseacopeland@email.com", "password"),
-                new Staff(2, "michelle", "Copland", EmployeeType.TEAMMEMBER, "michellecopeland@email.com", "password"),
-                new Staff(3, "Carly", "Copland", EmployeeType.TEAMMEMBER, "Carlycopeland@email.com", "password"),
-                new Staff(4, "ciara", "Copland", EmployeeType.TEAMMEMBER, "ciaracopeland@email.com", "password"),
-                new Staff(5, "anna", "Copland", EmployeeType.TEAMMEMBER, "annacopeland@email.com", "password"),
-                new Staff(6, "dee", "Copland", EmployeeType.TEAMLEADER, "deecopeland@email.com", "password")
+                new Staff(1, "Chelsea", "Copland", EmployeeType.MANAGER, true, "chelseacopeland@email.com", "password"),
+                new Staff(2, "michelle", "Copland", EmployeeType.TEAMMEMBER, false, "michellecopeland@email.com", "password"),
+                new Staff(3, "Carly", "Copland", EmployeeType.TEAMMEMBER, false, "Carlycopeland@email.com", "password"),
+                new Staff(4, "ciara", "Copland", EmployeeType.TEAMMEMBER, true, "ciaracopeland@email.com", "password"),
+                new Staff(5, "anna", "Copland", EmployeeType.TEAMMEMBER, false, "annacopeland@email.com", "password"),
+                new Staff(6, "dee", "Copland", EmployeeType.TEAMLEADER, true, "deecopeland@email.com", "password")
                 );
 
             modelBuilder.Entity<Staffing>()

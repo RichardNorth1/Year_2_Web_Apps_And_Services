@@ -12,15 +12,15 @@ namespace ThAmCo.Catering.Models
         public MenuFoodItemDto(MenuFoodItem mfi)
         {
             MenuId = mfi.MenuId;
-            Menu = mfi.Menu;
+            //Menu = mfi.Menu;
             FoodItemId = mfi.FoodItemId;
-            FoodItem = mfi.Fooditem;
+            //FoodItem = mfi.Fooditem;
         }
 
         public int MenuId { get; set; }
-        public Menu Menu { get; set; }
+        //public Menu Menu { get; set; }
         public int FoodItemId { get; set; }
-        public FoodItem FoodItem { get; set; }
+        //public FoodItem FoodItem { get; set; }
 
     }
 }

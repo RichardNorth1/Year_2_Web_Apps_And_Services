@@ -4,10 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["EventBookingName"]</h1>
+
+<h2>Number Of Guests: @Model.Count()</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-route-eventId=@ViewData["EventId"]>Add A Guest To This Booking</a>
 </p>
 <table class="table">
     <thead>
@@ -16,7 +18,7 @@
                 @Html.DisplayNameFor(model => model.Guest)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event)
+                @Html.DisplayNameFor(model => model.Attended)
             </th>
             <th></th>
         </tr>
@@ -28,12 +30,12 @@
                 @Html.DisplayFor(modelItem => item.Guest.Forename)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Event.EventId)
+                @Html.DisplayFor(modelItem => item.Attended)
             </td>
             <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.EventId, id2=item.GuestId }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.EventId, id2=item.GuestId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.EventId, id2=item.GuestId })
+                    @Html.ActionLink("Edit", "Edit", new { eventId=item.EventId, guestId=item.GuestId }) |
+                    @*@Html.ActionLink("Details", "Details", new { eventId=item.EventId, guestId=item.GuestId }) |*@
+                    @Html.ActionLink("Delete", "Delete", new { eventId=item.EventId, guestId=item.GuestId })
             </td>
         </tr>
 }

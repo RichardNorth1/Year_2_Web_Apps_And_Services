@@ -28,20 +28,23 @@ namespace ThAmCo.Events.Controllers
         }
 
         // GET: Guests/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int guestId)
         {
-            if (id == null || _context.Guest == null)
+            if (_context.Guest == null)
             {
                 return NotFound();
             }
 
-            var guest = await _context.Guest
-                .FirstOrDefaultAsync(m => m.GuestId == id);
+            var guest = await _context.Guest.Include(g => g.Events).ThenInclude(gb=> gb.Event)
+                .FirstOrDefaultAsync(m => m.GuestId == guestId);
             if (guest == null)
             {
                 return NotFound();
             }
+            var listofevents = guest.Events;
             var VM = new GuestViewModel(guest);
+            VM.Bookings = guest.Events.Select(e => new GuestBookingViewModel(e)).ToList();
+
             return View(VM);
         }
 

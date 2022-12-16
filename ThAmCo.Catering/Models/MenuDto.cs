@@ -15,16 +15,16 @@ namespace ThAmCo.Catering.Models
             MenuName = m.MenuName;
         }
 
-        public MenuDto(int menuId, string menuName, List<MenuFoodItemDto> menuItemsDto)
-        {
-            MenuId = menuId;
-            MenuName = menuName;
-            MenuItemsDto = menuItemsDto;
-        }
+        //public MenuDto(int menuId, string menuName, List<MenuFoodItemDto> menuItemsDto)
+        //{
+        //    MenuId = menuId;
+        //    MenuName = menuName;
+        //    MenuItemsDto = menuItemsDto;
+        //}
 
         public int MenuId { get; set; }
 
         public string MenuName { get; set; }
-        public List<MenuFoodItemDto> MenuItemsDto { get; set; }
+        //public List<MenuFoodItemDto> MenuItemsDto { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.Models;
 
 namespace ThAmCo.Events.Controllers
 {
@@ -25,21 +26,31 @@ namespace ThAmCo.Events.Controllers
         }
 
         // GET: Staffs/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? staffId)
         {
-            if (id == null || _context.Staff == null)
+            if (staffId == null || _context.Staff == null)
             {
                 return NotFound();
             }
-
+            // get the staff members events list
+            var staffsUpComingEvents = await _context.Staffing
+                //.Include(s => s.Staff)
+                .Include(s => s.Event)
+                .Where(s => s.StaffId == staffId)
+                .ToListAsync();
+            //IEnumerable<EventViewModel> events = 
+            // get the individual staff member
             var staff = await _context.Staff
-                .FirstOrDefaultAsync(m => m.StaffId == id);
+                .FirstOrDefaultAsync(m => m.StaffId == staffId);
+
+            var VM = new StaffViewModel(staff);
+            VM.Events = staffsUpComingEvents.Select(e => new EventViewModel(e.Event));
             if (staff == null)
             {
                 return NotFound();
             }
 
-            return View(staff);
+            return View(VM);
         }
 
         // GET: Staffs/Create
@@ -59,7 +70,7 @@ namespace ThAmCo.Events.Controllers
             {
                 _context.Add(staff);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new {staffId = staff.StaffId});
             }
             return View(staff);
         }

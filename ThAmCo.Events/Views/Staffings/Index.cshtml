@@ -1,14 +1,48 @@
-﻿@model IEnumerable<ThAmCo.Events.Data.Staffing>
+﻿@model IEnumerable<ThAmCo.Events.Models.StaffingViewModel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["EventBookingName"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-route-eventId="@ViewData["EventId"]">Create New</a>
 </p>
+
+@if ((bool)ViewData["HasRequiredStaff"] == false && (bool)@ViewData["HasFirstAider"] == false)
+{
+
+
+    <div>
+        <label  class=" alert alert-warning" role="alert" align="center">
+            &#9888; Needs First Aid  Staff and more staff
+        </label>
+        @*                        <label class="alert alert-warning" role="alert" align="center">
+    &#9888; Needs More Staff
+    </label>*@
+    </div>
+}
+else if ((bool)@ViewData["HasFirstAider"] == false)
+{
+
+    <p colspan="12" align="center">
+        <label class="alert alert-warning" role="alert" align="center">
+            &#9888; This Event Does Not Have a First Aid Qualified Member Of Staff
+        </label>
+    </p>
+
+}
+else if ((bool)ViewData["HasRequiredStaff"] == false)
+{
+
+    <p colspan="12" align="center">
+        <label class="alert alert-warning" role="alert" align="center">
+            &#9888; This Event Does Not Have The Required Amount Of Staff
+        </label>
+    </p>
+
+}
 <table class="table">
     <thead>
         <tr>
@@ -31,9 +65,10 @@
                 @Html.DisplayFor(modelItem => item.Event.EventId)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a asp-action="Edit" asp-route-id="@item.EventId">Edit</a>
+                    @Html.ActionLink("Edit", "Edit", new { eventId=item.EventId, staffId = item.StaffId }) |
+                    @Html.ActionLink("Details", "Details", new { eventId=item.EventId, staffId = item.StaffId }) |
+                @Html.ActionLink("Delete", "Delete", new { eventId=item.EventId, staffId = item.StaffId })
             </td>
         </tr>
 }

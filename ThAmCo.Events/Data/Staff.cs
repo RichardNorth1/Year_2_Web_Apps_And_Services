@@ -10,12 +10,14 @@ namespace ThAmCo.Events.Data
 
         public Staff(int staffId, string forename, 
             string surname, EmployeeType jobRole, 
-            string email, string password)
+            bool isFirstAider, string email, 
+            string password)
         {
             StaffId = staffId;
             Forename = forename;
             Surname = surname;
             JobRole = jobRole;
+            FirstAidQualified = isFirstAider;
             Email = email;
             Password = password;
         }
@@ -29,12 +31,14 @@ namespace ThAmCo.Events.Data
         public string Surname { get; set; }
         public string FullName => Forename + " " + Surname;
         [Required]
+        public bool FirstAidQualified { get;set; }
+        [Required]
         public EmployeeType JobRole { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-
+        public bool IsDeleted { get; set; }
         public List<Staffing> Events { get; set; }
 
     }

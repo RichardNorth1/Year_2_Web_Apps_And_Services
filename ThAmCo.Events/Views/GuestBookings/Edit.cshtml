@@ -1,4 +1,4 @@
-﻿@model ThAmCo.Events.Data.GuestBooking
+﻿@model ThAmCo.Events.Models.GuestBookingViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,6 +14,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="GuestId" />
             <input type="hidden" asp-for="EventId" />
+            <div>
+                
+                <label asp-for="Attended" class="control-label"> Guest Attened</label>
+                <select asp-for="Attended" class="form-control" asp-items="@Model.AttendenceList"></select>
+            </div>
+            
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -26,5 +33,15 @@
 </div>
 
 @section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#Attened").click(function () {
+                @Model.Attended = true;
+            });
+            $("#NotAttened").click(function () {
+                ("#Attended") = false;
+            });
+        });
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -1,4 +1,5 @@
-﻿using ThAmCo.Events.Data;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using ThAmCo.Events.Data;
 
 namespace ThAmCo.Events.Models
 {
@@ -12,6 +13,8 @@ namespace ThAmCo.Events.Models
         {
             StaffId = s.StaffId;
             EventId = s.EventId;
+            Event = new EventViewModel(s.Event);
+            Staff = new StaffViewModel(s.Staff);
         }
 
         public StaffingViewModel(int staffId, int eventId)
@@ -21,8 +24,10 @@ namespace ThAmCo.Events.Models
         }
 
         public int StaffId { get; set; }
-        public Staff Staff { get; set; }
+        public StaffViewModel Staff { get; set; }
         public int EventId { get; set; }
-        public Event Event { get; set; }
+        public EventViewModel Event { get; set; }
+        public string SelectedStaff { get; set; }
+        public List<SelectListItem> StaffSelectList { get; set; }
     }
 }

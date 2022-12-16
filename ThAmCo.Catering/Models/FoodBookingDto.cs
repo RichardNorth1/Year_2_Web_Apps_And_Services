@@ -15,22 +15,22 @@ namespace ThAmCo.Catering.Models
             NumberOfGuests = fb.NumberOfGuests;
             MenuId = fb.MenuId;
         }
-        public FoodBookingDTO(FoodBooking fb, Menu m)
-        {
-            FoodBookingId = fb.FoodBookingId;
-            ClientReferenceId = fb.ClientReferenceId;
-            NumberOfGuests = fb.NumberOfGuests;
-            MenuId = fb.MenuId;
-            Menu = new MenuDto(m);
-        }
+        //public FoodBookingDTO(FoodBooking fb, Menu m)
+        //{
+        //    FoodBookingId = fb.FoodBookingId;
+        //    ClientReferenceId = fb.ClientReferenceId;
+        //    NumberOfGuests = fb.NumberOfGuests;
+        //    MenuId = fb.MenuId;
+        //    Menu = new MenuDto(m);
+        //}
 
-        public FoodBookingDTO(int foodBookingId, int clientReferenceId, int numberOfGuests, int menuId)
-        {
-            FoodBookingId = foodBookingId;
-            ClientReferenceId = clientReferenceId;
-            NumberOfGuests = numberOfGuests;
-            MenuId = menuId;
-        }
+        //public FoodBookingDTO(int foodBookingId, int clientReferenceId, int numberOfGuests, int menuId)
+        //{
+        //    FoodBookingId = foodBookingId;
+        //    ClientReferenceId = clientReferenceId;
+        //    NumberOfGuests = numberOfGuests;
+        //    MenuId = menuId;
+        //}
 
         public int FoodBookingId { get; set; }
 
@@ -39,6 +39,6 @@ namespace ThAmCo.Catering.Models
         public int NumberOfGuests { get; set; }
 
         public int MenuId { get; set; }
-        public MenuDto Menu { get; set; }
+        //public MenuDto Menu { get; set; }
     }
 }

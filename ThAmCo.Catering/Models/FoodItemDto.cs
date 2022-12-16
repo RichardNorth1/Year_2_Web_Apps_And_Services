@@ -9,12 +9,12 @@ namespace ThAmCo.Catering.Models
         {
         }
 
-        public FoodItemDto(int foodItemId, string description, double unitPrice)
-        {
-            FoodItemId = foodItemId;
-            Description = description;
-            UnitPrice = unitPrice;
-        }
+        //public FoodItemDto(int foodItemId, string description, double unitPrice)
+        //{
+        //    FoodItemId = foodItemId;
+        //    Description = description;
+        //    UnitPrice = unitPrice;
+        //}
 
         public FoodItemDto(FoodItem fi)
         {
@@ -28,7 +28,7 @@ namespace ThAmCo.Catering.Models
         public string Description { get; set; }
 
         public double UnitPrice { get; set; }
-        public List<MenuFoodItemDto> MenuDtos { get; set; }
+        //public List<MenuFoodItemDto> MenuDtos { get; set; }
 
     }
 }

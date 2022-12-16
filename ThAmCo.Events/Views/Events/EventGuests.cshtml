@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ThAmCo.Events.Models.GuestBookingViewModel>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1 >Guest List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Guest.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attended)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Guest.FullName)
+                </td>
+                <td>
+                    <input type="checkbox" id="Attended" name="Attended" value="true">
+                    @*@Html.DisplayFor(modelItem => item.Attended)*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

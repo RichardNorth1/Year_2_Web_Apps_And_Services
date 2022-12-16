@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ilYhtreLUtRTtQPd9ZIv7aNGYXzbuuHm5jvbWbsW7U/vLRG5TYoWWs3G3G94DzwOIdgx8VMzYelXh93FdlxpzQ==",
+  "dgSpecHash": "pvkKaZRFZwMvZ0RkCoPj/0JsYmccONVO1Dkk2u7tqonQfaeVEjMcPfz7mnBnUY4iSDkFwfbKqhRSuHt9Fcvhjg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Student\\OneDrive - Teesside University\\Year 2\\Web Apps and Services\\ICA Work\\ThAmCo\\ThAmCo\\ThAmCo.Events\\ThAmCo.Events.csproj",
+  "projectFilePath": "C:\\Users\\Student\\OneDrive - Teesside University\\Year 2\\Web Apps and Services\\ICA Work\\ThAmCo_ICA_28_11_2022\\ThAmCo\\ThAmCo\\ThAmCo.Events\\ThAmCo.Events.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Student\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

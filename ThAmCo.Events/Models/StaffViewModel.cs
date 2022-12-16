@@ -19,7 +19,7 @@ namespace ThAmCo.Events.Models
 
         public StaffViewModel(int staffId, string fullName, 
             EmployeeType jobRole, string email, 
-            string password, List<Staffing> events)
+            string password, IEnumerable<EventViewModel> events)
         {
             StaffId = staffId;
             FullName = fullName;
@@ -34,7 +34,7 @@ namespace ThAmCo.Events.Models
         public EmployeeType JobRole { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public List<Staffing> Events { get; set; }
+        public IEnumerable<EventViewModel> Events { get; set; }
 
     }
 }

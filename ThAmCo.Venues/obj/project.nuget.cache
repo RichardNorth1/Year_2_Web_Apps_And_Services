@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y2NuwOdX/tzPdUIlt6pAp8t+e8N86wZGH+lPovc8u8eGAtELY96ix5gk4fAwUltyJKw+KHp0PP8SiFhzy6M0Hw==",
+  "dgSpecHash": "HmPnL7pTQt8pROuFk4ENGqliM7XA5qf0A6lTC2rpm1b5ZN5k4Zf9vPtmJQ5uYIOzauMIQVGEi8aKMVVE52Bpvg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Student\\OneDrive - Teesside University\\Year 2\\Web Apps and Services\\ICA Work\\ThAmCo\\ThAmCo\\ThAmCo.Venues\\ThAmCo.Venues.csproj",
+  "projectFilePath": "C:\\Users\\Student\\OneDrive - Teesside University\\Year 2\\Web Apps and Services\\ICA Work\\ThAmCo_ICA_28_11_2022\\ThAmCo\\ThAmCo\\ThAmCo.Venues\\ThAmCo.Venues.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Student\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.9\\microsoft.aspnet.webapi.client.5.2.9.nupkg.sha512",

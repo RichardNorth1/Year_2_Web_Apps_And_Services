@@ -2,6 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using ThAmCo.Venues.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("*");
+        });
+});
 
 // Add services to the container.
 
@@ -18,6 +26,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();

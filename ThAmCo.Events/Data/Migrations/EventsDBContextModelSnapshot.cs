@@ -26,6 +26,9 @@ namespace ThAmCo.Events.Data.Migrations
                     b.Property<int>("ClientReferenceId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("EventDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("EventName")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -34,8 +37,23 @@ namespace ThAmCo.Events.Data.Migrations
                         .HasMaxLength(3)
                         .HasColumnType("TEXT");
 
+                    b.Property<bool?>("HasFirstAider")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool?>("HasRequiredStaff")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("MenuForEvent")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Reference")
                         .HasMaxLength(13)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("VenueName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("EventId");
@@ -47,16 +65,20 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             EventId = 1,
                             ClientReferenceId = 1,
+                            EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventName = "The North Family Birthday bash",
                             EventTypeId = "PTY",
+                            IsDeleted = false,
                             Reference = "Reference1234"
                         },
                         new
                         {
                             EventId = 2,
                             ClientReferenceId = 2,
+                            EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventName = "The annual golf meet up",
                             EventTypeId = "MET",
+                            IsDeleted = false,
                             Reference = "Reference2345"
                         });
                 });
@@ -77,6 +99,9 @@ namespace ThAmCo.Events.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -95,6 +120,7 @@ namespace ThAmCo.Events.Data.Migrations
                             Address = "21 jump street",
                             Email = "RichardNorth@email.com",
                             Forename = "Richard",
+                            IsDeleted = false,
                             Surname = "North",
                             Telephone = 164266223
                         },
@@ -104,6 +130,7 @@ namespace ThAmCo.Events.Data.Migrations
                             Address = "22 hop street",
                             Email = "DanielNorth@email.com",
                             Forename = "Daniel",
+                            IsDeleted = false,
                             Surname = "North",
                             Telephone = 164263223
                         },
@@ -113,6 +140,7 @@ namespace ThAmCo.Events.Data.Migrations
                             Address = "23 skip street",
                             Email = "MichealNorth@email.com",
                             Forename = "Micheal",
+                            IsDeleted = false,
                             Surname = "North",
                             Telephone = 1642642223
                         },
@@ -122,6 +150,7 @@ namespace ThAmCo.Events.Data.Migrations
                             Address = "24 run street",
                             Email = "RobertNorth@email.com",
                             Forename = "Robert",
+                            IsDeleted = false,
                             Surname = "North",
                             Telephone = 163366223
                         },
@@ -131,6 +160,7 @@ namespace ThAmCo.Events.Data.Migrations
                             Address = "25 skid street",
                             Email = "AidanNorth@email.com",
                             Forename = "Aidan",
+                            IsDeleted = false,
                             Surname = "North",
                             Telephone = 164266213
                         },
@@ -140,6 +170,7 @@ namespace ThAmCo.Events.Data.Migrations
                             Address = "26 slide street",
                             Email = "ThomasNorth@email.com",
                             Forename = "Thomas",
+                            IsDeleted = false,
                             Surname = "North",
                             Telephone = 164266923
                         });
@@ -153,6 +184,12 @@ namespace ThAmCo.Events.Data.Migrations
                     b.Property<int>("GuestId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Attended")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("EventId", "GuestId");
 
                     b.HasIndex("GuestId");
@@ -163,42 +200,58 @@ namespace ThAmCo.Events.Data.Migrations
                         new
                         {
                             EventId = 1,
-                            GuestId = 1
+                            GuestId = 1,
+                            Attended = false,
+                            IsDeleted = false
                         },
                         new
                         {
                             EventId = 1,
-                            GuestId = 2
+                            GuestId = 2,
+                            Attended = false,
+                            IsDeleted = false
                         },
                         new
                         {
                             EventId = 1,
-                            GuestId = 3
+                            GuestId = 3,
+                            Attended = false,
+                            IsDeleted = false
                         },
                         new
                         {
                             EventId = 1,
-                            GuestId = 4
+                            GuestId = 4,
+                            Attended = false,
+                            IsDeleted = false
                         },
                         new
                         {
                             EventId = 1,
-                            GuestId = 5
+                            GuestId = 5,
+                            Attended = false,
+                            IsDeleted = false
                         },
                         new
                         {
                             EventId = 2,
-                            GuestId = 1
+                            GuestId = 1,
+                            Attended = false,
+                            IsDeleted = false
                         },
                         new
                         {
                             EventId = 2,
-                            GuestId = 6
+                            GuestId = 6,
+                            Attended = false,
+                            IsDeleted = false
                         },
                         new
                         {
                             EventId = 2,
-                            GuestId = 4
+                            GuestId = 4,
+                            Attended = false,
+                            IsDeleted = false
                         });
                 });
 
@@ -212,9 +265,15 @@ namespace ThAmCo.Events.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("FirstAidQualified")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Forename")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("JobRole")
                         .HasColumnType("INTEGER");
@@ -236,7 +295,9 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             StaffId = 1,
                             Email = "chelseacopeland@email.com",
+                            FirstAidQualified = true,
                             Forename = "Chelsea",
+                            IsDeleted = false,
                             JobRole = 0,
                             Password = "password",
                             Surname = "Copland"
@@ -245,7 +306,9 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             StaffId = 2,
                             Email = "michellecopeland@email.com",
+                            FirstAidQualified = false,
                             Forename = "michelle",
+                            IsDeleted = false,
                             JobRole = 2,
                             Password = "password",
                             Surname = "Copland"
@@ -254,7 +317,9 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             StaffId = 3,
                             Email = "Carlycopeland@email.com",
+                            FirstAidQualified = false,
                             Forename = "Carly",
+                            IsDeleted = false,
                             JobRole = 2,
                             Password = "password",
                             Surname = "Copland"
@@ -263,7 +328,9 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             StaffId = 4,
                             Email = "ciaracopeland@email.com",
+                            FirstAidQualified = true,
                             Forename = "ciara",
+                            IsDeleted = false,
                             JobRole = 2,
                             Password = "password",
                             Surname = "Copland"
@@ -272,7 +339,9 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             StaffId = 5,
                             Email = "annacopeland@email.com",
+                            FirstAidQualified = false,
                             Forename = "anna",
+                            IsDeleted = false,
                             JobRole = 2,
                             Password = "password",
                             Surname = "Copland"
@@ -281,7 +350,9 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             StaffId = 6,
                             Email = "deecopeland@email.com",
+                            FirstAidQualified = true,
                             Forename = "dee",
+                            IsDeleted = false,
                             JobRole = 1,
                             Password = "password",
                             Surname = "Copland"
@@ -296,6 +367,9 @@ namespace ThAmCo.Events.Data.Migrations
                     b.Property<int>("EventId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("StaffId", "EventId");
 
                     b.HasIndex("EventId");
@@ -306,37 +380,44 @@ namespace ThAmCo.Events.Data.Migrations
                         new
                         {
                             StaffId = 1,
-                            EventId = 1
+                            EventId = 1,
+                            IsDeleted = false
                         },
                         new
                         {
                             StaffId = 2,
-                            EventId = 1
+                            EventId = 1,
+                            IsDeleted = false
                         },
                         new
                         {
                             StaffId = 3,
-                            EventId = 1
+                            EventId = 1,
+                            IsDeleted = false
                         },
                         new
                         {
                             StaffId = 4,
-                            EventId = 1
+                            EventId = 1,
+                            IsDeleted = false
                         },
                         new
                         {
                             StaffId = 3,
-                            EventId = 2
+                            EventId = 2,
+                            IsDeleted = false
                         },
                         new
                         {
                             StaffId = 1,
-                            EventId = 2
+                            EventId = 2,
+                            IsDeleted = false
                         },
                         new
                         {
                             StaffId = 6,
-                            EventId = 2
+                            EventId = 2,
+                            IsDeleted = false
                         });
                 });
 
