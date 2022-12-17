@@ -80,7 +80,7 @@ namespace ThAmCo.Events.Controllers
         // [Bind("EventName, EventTypeId, EventDate, MenuId")] EventViewModel VM
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EventViewModel VM)
+        public async Task<IActionResult> Create(CreateEventViewModel VM)
         {
             
             if (ModelState.IsValid)
@@ -168,12 +168,12 @@ namespace ThAmCo.Events.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventId,ClientReferenceId,Reference,EventTypeId")] Event eventToEdit)
+        public async Task<IActionResult> Edit(EventViewModel eventToEdit)
         {
-            if (id != eventToEdit.EventId)
-            {
-                return NotFound();
-            }
+            //if (id != eventToEdit.EventId)
+            //{
+            //    return NotFound();
+            //}
 
             if (ModelState.IsValid)
             {

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using ThAmCo.Events.Data;
 using ThAmCo.Events.DTOs;
+using ThAmCo.Venues.Data;
 
 namespace ThAmCo.Events.Models
 {
@@ -11,17 +12,33 @@ namespace ThAmCo.Events.Models
         {
         }
 
+        //public EventViewModel(Event e)
+        //{
+        //    EventId = e.EventId;
+        //    EventDate = e.EventDate;
+        //    EventName = e.EventName;
+        //    EventType = e.EventType;
+        //    VenueName = e.VenueName;
+        //    ClientReferenceId = e.ClientReferenceId;
+        //    Reference = e.Reference;
+        //    HasRequiredStaff = (bool)e.HasRequiredStaff;
+        //    HasFirstAider = (bool)e.HasFirstAider;
+        //}
+
         public EventViewModel(Event e)
         {
             EventId = e.EventId;
-            EventDate = e.EventDate;
             EventName = e.EventName;
-            VenueName = e.VenueName;
-            ClientReferenceId = e.ClientReferenceId;
-            Reference = e.Reference;
-            HasRequiredStaff = (bool)e.HasRequiredStaff;
             HasFirstAider = (bool)e.HasFirstAider;
+            HasRequiredStaff = (bool)e.HasRequiredStaff;
+            VenueName = e.VenueName;
+            Reference = e.Reference;
+            EventType = e.EventType;
+            EventDate = DateOnly.FromDateTime(e.EventDate);
+            ClientReferenceId = e.ClientReferenceId;
+            MenuForEvent = e.MenuForEvent;
         }
+
 
         //public int EventId { get; set; }
         //public int MenuId { get; set; }
@@ -41,17 +58,16 @@ namespace ThAmCo.Events.Models
         //public List<GuestBookingViewModel> GuestBookings { get; set; }
         //public List<StaffingViewModel> Staffs { get; set; }
 
-        public int MenuId { get; set; }
-        public DateOnly EventDateStart { get; set; }
-        public DateOnly EventDateEnd { get; set; }
-        public string SelectedEventDate { get; set; }
-        public string SelectedEventTypeId { get; set; }
-        public string SelectedMenuId { get; set; }
+        //public int MenuId { get; set; }
+        //public DateOnly EventDateStart { get; set; }
+        //public DateOnly EventDateEnd { get; set; }
+        //public string SelectedEventDate { get; set; }
+        //public string SelectedEventTypeId { get; set; }
+        //public string SelectedMenuId { get; set; }
 
         #region EventFields
 
         public int EventId { get; set; }
-
 
         public string EventName { get; set; }
 
@@ -59,7 +75,6 @@ namespace ThAmCo.Events.Models
 
         public bool HasRequiredStaff { get; set; }
 
-        public bool IsDeleted { get; set; }
         public int GuestCount { get; set; }
         public int StaffCount { get; set; }
 
@@ -75,10 +90,9 @@ namespace ThAmCo.Events.Models
 
         public string Reference { get; set; }
 
+        public string EventType { get; set; }
 
-        public string EventTypeId { get; set; } = string.Empty;
-
-        public DateTime EventDate { get; set; }
+        public DateOnly EventDate { get; set; }
 
         #endregion
 

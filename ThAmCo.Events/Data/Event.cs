@@ -13,59 +13,13 @@ namespace ThAmCo.Events.Data
         }
 
         public Event(int eventId, string eventName,
-            int clientReferenceId, string reference,
-            string eventTypeId)
+            int clientReferenceId, string reference)
         {
             EventId = eventId;
             EventName = eventName;
             ClientReferenceId = clientReferenceId;
             Reference = reference;
-            EventTypeId = eventTypeId;
         }
-
-
-
-        //#region EventFields
-
-        //[Key]
-        //public int EventId { get; set; }
-        //public DateTime EventDate { get; set; }
-
-        //[Required]
-        //public string EventName { get; set; }
-
-        //public bool? HasFirstAider { get; set; }
-
-        //public bool? HasRequiredStaff { get; set; }
-
-        //public bool IsDeleted { get; set; }
-
-        //public List<GuestBooking> GuestBookings { get; set; }
-
-        //public List<Staffing> Staffs { get; set; }
-
-        //#endregion
-
-        //#region VenuesData
-
-        //[Required]
-        //public string VenueName { get; set; }
-
-        //[MinLength(13), MaxLength(13)]
-        //public string Reference { get; set; }
-        //[Required]
-        //public string EventType { get; set; }
-
-
-
-        //#endregion
-
-        //#region CateringData
-
-        //// ID from food booking table in the catering DB
-        //public int ClientReferenceId { get; set; }
-
-        //#endregion
 
         [Key]
         public int EventId { get; set; }
@@ -86,12 +40,13 @@ namespace ThAmCo.Events.Data
 
         public string VenueName { get; set; }
 
-        [MinLength(13), MaxLength(13)]
+
         public string Reference { get; set; }
 
-        [MinLength(3), MaxLength(3)]
-        public string EventTypeId { get; set; } = string.Empty;
-        [Required]
+
+        public string EventType { get; set; }
+
+
         public DateTime EventDate { get; set; }
 
         // ID from food booking table in the catering DB
