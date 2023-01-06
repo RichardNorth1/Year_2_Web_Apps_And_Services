@@ -8,17 +8,23 @@ namespace ThAmCo.Events.Data
 {
     public class Event
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Event()
         {
         }
 
         public Event(int eventId, string eventName,
-            int clientReferenceId, string reference)
+            int clientReferenceId, string reference, 
+            decimal price, int duration)
         {
             EventId = eventId;
             EventName = eventName;
             ClientReferenceId = clientReferenceId;
             Reference = reference;
+            EventCost = price;
+            EventDuration = duration;
         }
 
         [Key]
@@ -26,6 +32,9 @@ namespace ThAmCo.Events.Data
 
         [Required]
         public string EventName { get; set; }
+
+        public int EventDuration { get; set; }
+        public decimal EventCost { get; set; }
 
         public bool? HasFirstAider { get; set; }
 

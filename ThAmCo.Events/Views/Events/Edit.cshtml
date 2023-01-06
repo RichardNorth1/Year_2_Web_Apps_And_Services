@@ -1,4 +1,4 @@
-﻿@model ThAmCo.Events.Data.Event
+﻿@model ThAmCo.Events.Models.EventViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -8,7 +8,7 @@
 
 <h4>Event</h4>
 <hr />
-<div class="row">
+@*<div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -23,14 +23,44 @@
                 <input asp-for="Reference" class="form-control" />
                 <span asp-validation-for="Reference" class="text-danger"></span>
             </div>
-@*            <div class="form-group">
+            <div class="form-group">
                 <label asp-for="EventTypeId" class="control-label"></label>
                 <input asp-for="EventTypeId" class="form-control" />
                 <span asp-validation-for="EventTypeId" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+        </form>
+    </div>
+</div>*@
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EventId" />
+            <input type="hidden" asp-for="HasFirstAider" />
+            <input type="hidden" asp-for="HasRequiredStaff" />
+            <input type="hidden" asp-for="VenueName" />
+            <input type="hidden" asp-for="Reference" />
+            <input type="hidden" asp-for="EventType" />
+            <input type="hidden" asp-for="EventDate" />
+            <input type="hidden" asp-for="ClientReferenceId" />
+            <input type="hidden" asp-for="MenuForEvent" />
+            <div class="form-group">
+                <label asp-for="EventName" class="control-label"></label>
+                <input asp-for="EventName" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="EventDuration" class="control-label"></label>
+                <input asp-for="EventDuration" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            
         </form>
     </div>
 </div>
@@ -40,5 +70,6 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript" src="~/js/CreateEvent.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

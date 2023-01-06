@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ThAmCo.Events.Data.Staff>
+﻿@model IEnumerable<ThAmCo.Events.Models.StaffViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.JobRole)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FirstAidQualified)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
@@ -41,6 +44,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.JobRole)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstAidQualifiedString)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)

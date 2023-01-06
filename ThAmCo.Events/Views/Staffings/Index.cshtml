@@ -7,7 +7,8 @@
 <h1>@ViewData["EventBookingName"]</h1>
 
 <p>
-    <a asp-action="Create" asp-route-eventId="@ViewData["EventId"]">Create New</a>
+    <a asp-action="Create" asp-route-eventId="@ViewData["EventId"]">Create New</a> |
+    <a asp-controller="Events" asp-action="Index">Back To Event List</a>
 </p>
 
 @if ((bool)ViewData["HasRequiredStaff"] == false && (bool)@ViewData["HasFirstAider"] == false)
@@ -18,9 +19,6 @@
         <label  class=" alert alert-warning" role="alert" align="center">
             &#9888; Needs First Aid  Staff and more staff
         </label>
-        @*                        <label class="alert alert-warning" role="alert" align="center">
-    &#9888; Needs More Staff
-    </label>*@
     </div>
 }
 else if ((bool)@ViewData["HasFirstAider"] == false)
@@ -65,8 +63,8 @@ else if ((bool)ViewData["HasRequiredStaff"] == false)
                 @Html.DisplayFor(modelItem => item.Event.EventId)
             </td>
             <td>
-                    <a asp-action="Edit" asp-route-id="@item.EventId">Edit</a>
-                    @Html.ActionLink("Edit", "Edit", new { eventId=item.EventId, staffId = item.StaffId }) |
+@*                    <a asp-action="Edit" asp-route-id="@item.EventId">Edit</a>
+                    @Html.ActionLink("Edit", "Edit", new { eventId=item.EventId, staffId = item.StaffId }) |*@
                     @Html.ActionLink("Details", "Details", new { eventId=item.EventId, staffId = item.StaffId }) |
                 @Html.ActionLink("Delete", "Delete", new { eventId=item.EventId, staffId = item.StaffId })
             </td>

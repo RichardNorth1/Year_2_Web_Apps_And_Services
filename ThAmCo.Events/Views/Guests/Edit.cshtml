@@ -1,4 +1,4 @@
-﻿@model ThAmCo.Events.Data.Guest
+﻿@model ThAmCo.Events.Models.GuestViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -46,7 +46,9 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a> |
+    @*@Html.ActionLink("Anonymise Guest", "AnonymiseGuest", new { guestId = @Model.GuestId }, new {onclick = "return confirm('Are sure wants to anonymise this guest?');"})*@
+    <a asp-action="AnonymiseGuest" asp-route-guestId="@Model.GuestId" asp>Anonymise Guest</a> 
 </div>
 
 @section Scripts {

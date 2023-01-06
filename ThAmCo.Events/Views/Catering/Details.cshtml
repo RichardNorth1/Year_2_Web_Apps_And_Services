@@ -1,0 +1,44 @@
+﻿@model ThAmCo.Events.Models.DTOs.FoodBookingViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FoodBookingId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClientReferenceId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfGuests)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MenuId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MenuName)
+        </dt>
+
+        @foreach (var menuItem in Model.MenuItems)
+        {
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MenuItems)
+            </dd>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MenuItems)
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model?.EventId">Edit</a> *@|
+    <a asp-action="Index">Back to List</a>
+</div>
+

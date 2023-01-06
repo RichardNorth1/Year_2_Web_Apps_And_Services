@@ -17,7 +17,7 @@ namespace ThAmCo.Events.Models
             EventId = gb.EventId;
             Guest = new GuestViewModel(gb.Guest);
             Event = new EventViewModel(gb.Event);
-            Attended = gb.Attended ? "Attended" : "Did Not Attened";
+            Attended = gb.Attended ? "Attended" : "Did Not Attend";
             AttendenceList = new List<SelectListItem> { 
                 new SelectListItem { Text = "Yes", Value = "yes" },
                 new SelectListItem { Text = "No", Value = "no" } };

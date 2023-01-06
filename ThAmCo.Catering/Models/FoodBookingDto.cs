@@ -3,34 +3,18 @@ using ThAmCo.Catering.Data;
 
 namespace ThAmCo.Catering.Models
 {
-    public class FoodBookingDTO
+    public class FoodBookingDto
     {
-        public FoodBookingDTO()
+        public FoodBookingDto()
         {
         }
-        public FoodBookingDTO(FoodBooking fb)
+        public FoodBookingDto(FoodBooking fb)
         {
             FoodBookingId = fb.FoodBookingId;
             ClientReferenceId = fb.ClientReferenceId;
             NumberOfGuests = fb.NumberOfGuests;
             MenuId = fb.MenuId;
         }
-        //public FoodBookingDTO(FoodBooking fb, Menu m)
-        //{
-        //    FoodBookingId = fb.FoodBookingId;
-        //    ClientReferenceId = fb.ClientReferenceId;
-        //    NumberOfGuests = fb.NumberOfGuests;
-        //    MenuId = fb.MenuId;
-        //    Menu = new MenuDto(m);
-        //}
-
-        //public FoodBookingDTO(int foodBookingId, int clientReferenceId, int numberOfGuests, int menuId)
-        //{
-        //    FoodBookingId = foodBookingId;
-        //    ClientReferenceId = clientReferenceId;
-        //    NumberOfGuests = numberOfGuests;
-        //    MenuId = menuId;
-        //}
 
         public int FoodBookingId { get; set; }
 

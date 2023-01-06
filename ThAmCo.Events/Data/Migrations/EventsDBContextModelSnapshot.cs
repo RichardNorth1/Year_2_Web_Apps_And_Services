@@ -26,8 +26,14 @@ namespace ThAmCo.Events.Data.Migrations
                     b.Property<int>("ClientReferenceId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("EventCost")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("EventDuration")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("EventName")
                         .IsRequired()
@@ -63,7 +69,9 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             EventId = 1,
                             ClientReferenceId = 1,
+                            EventCost = 1m,
                             EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventDuration = 3,
                             EventName = "The North Family Birthday bash",
                             IsDeleted = false,
                             Reference = "Reference1234"
@@ -72,7 +80,9 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             EventId = 2,
                             ClientReferenceId = 2,
+                            EventCost = 2m,
                             EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventDuration = 2,
                             EventName = "The annual golf meet up",
                             IsDeleted = false,
                             Reference = "Reference2345"
@@ -271,8 +281,9 @@ namespace ThAmCo.Events.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("JobRole")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("JobRole")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -294,7 +305,7 @@ namespace ThAmCo.Events.Data.Migrations
                             FirstAidQualified = true,
                             Forename = "Chelsea",
                             IsDeleted = false,
-                            JobRole = 0,
+                            JobRole = "Manager",
                             Password = "password",
                             Surname = "Copland"
                         },
@@ -305,7 +316,7 @@ namespace ThAmCo.Events.Data.Migrations
                             FirstAidQualified = false,
                             Forename = "michelle",
                             IsDeleted = false,
-                            JobRole = 2,
+                            JobRole = "Team Member",
                             Password = "password",
                             Surname = "Copland"
                         },
@@ -316,7 +327,7 @@ namespace ThAmCo.Events.Data.Migrations
                             FirstAidQualified = false,
                             Forename = "Carly",
                             IsDeleted = false,
-                            JobRole = 2,
+                            JobRole = "Team Member",
                             Password = "password",
                             Surname = "Copland"
                         },
@@ -327,7 +338,7 @@ namespace ThAmCo.Events.Data.Migrations
                             FirstAidQualified = true,
                             Forename = "ciara",
                             IsDeleted = false,
-                            JobRole = 2,
+                            JobRole = "Team Member",
                             Password = "password",
                             Surname = "Copland"
                         },
@@ -338,7 +349,7 @@ namespace ThAmCo.Events.Data.Migrations
                             FirstAidQualified = false,
                             Forename = "anna",
                             IsDeleted = false,
-                            JobRole = 2,
+                            JobRole = "Team Member",
                             Password = "password",
                             Surname = "Copland"
                         },
@@ -349,7 +360,7 @@ namespace ThAmCo.Events.Data.Migrations
                             FirstAidQualified = true,
                             Forename = "dee",
                             IsDeleted = false,
-                            JobRole = 1,
+                            JobRole = "Team Leader",
                             Password = "password",
                             Surname = "Copland"
                         });

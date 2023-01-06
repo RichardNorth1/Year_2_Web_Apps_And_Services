@@ -21,6 +21,12 @@ namespace ThAmCo.Catering.Controllers
             _context = context;
         }
 
+        #region Get Methods
+
+        /// <summary>
+        /// This Method is designed to return all Menu food items currently stored in the database as a menu food item dto
+        /// </summary>
+        /// <returns>menu food item DTO</returns>
         // GET: api/MenuFoodItems
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MenuFoodItemDto>>> GetMenuFoodItem()
@@ -31,11 +37,19 @@ namespace ThAmCo.Catering.Controllers
             return DTO;
         }
 
+        /// <summary>
+        /// This Method is designed to return a specific menu food item in the format of a menu food item DTO
+        /// </summary>
+        /// <param name="id1"></param>
+        /// <param name="id2"></param>
+        /// <returns></returns>
         // GET: api/MenuFoodItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MenuFoodItemDto>> GetMenuFoodItem(int id1, int id2)
+        public async Task<ActionResult<MenuFoodItemDto>> GetMenuFoodItem(int menuId, int foodItemId)
         {
-            var MenuFoodItem = await _context.MenuFoodItem.FindAsync(id1, id2);
+            var MenuFoodItem = await _context.MenuFoodItem
+                .Where(mfi => mfi.MenuId == menuId && mfi.FoodItemId == foodItemId)
+                .FirstOrDefaultAsync();
 
             if (MenuFoodItem == null)
             {
@@ -45,68 +59,57 @@ namespace ThAmCo.Catering.Controllers
             return new MenuFoodItemDto(MenuFoodItem);
 
         }
+        #endregion
 
-        // PUT: api/MenuFoodItems/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMenuFoodItem(int id, MenuFoodItem menuFoodItem)
-        {
-            if (id != menuFoodItem.MenuId)
-            {
-                return BadRequest();
-            }
+        #region Post Method
 
-            _context.Entry(menuFoodItem).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MenuFoodItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
+        /// <summary>
+        /// This method is designed to take in a menu food item DTO  and create a new menu food item and save it to the database
+        /// </summary>
+        /// <param name="menuFoodItemDto"></param>
+        /// <returns></returns>
         // POST: api/MenuFoodItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(MenuFoodItem menuFoodItem)
+        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(MenuFoodItemDto menuFoodItemDto)
         {
-            _context.MenuFoodItem.Add(menuFoodItem);
+
             try
             {
+                var menuFoodItem = new MenuFoodItem { FoodItemId = menuFoodItemDto.FoodItemId, MenuId = menuFoodItemDto.MenuId };
+                _context.MenuFoodItem.Add(menuFoodItem);
                 await _context.SaveChangesAsync();
+                return CreatedAtAction("GetMenuFoodItem", new { menuId = menuFoodItem.MenuId, foodItemId = menuFoodItem.FoodItemId }, menuFoodItem);
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
-                if (MenuFoodItemExists(menuFoodItem.MenuId))
+                if (MenuFoodItemExists(menuFoodItemDto.MenuId , menuFoodItemDto.FoodItemId))
                 {
                     return Conflict();
                 }
                 else
                 {
-                    throw;
+                    return BadRequest();
                 }
             }
 
-            return CreatedAtAction("GetMenuFoodItem", new { id = menuFoodItem.MenuId }, menuFoodItem);
+            
         }
 
+        #endregion
+
+        #region Delete Method
+
+        /// <summary>
+        /// This method is designed to take a menuId and foodItemId for the menu food item to be deleted and remove it from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/MenuFoodItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMenuFoodItem(int id)
+        public async Task<IActionResult> DeleteMenuFoodItem(int menuId, int foodItemId)
         {
-            var menuFoodItem = await _context.MenuFoodItem.FindAsync(id);
+            var menuFoodItem = await _context.MenuFoodItem.Where(mfi => mfi.MenuId == menuId && mfi.FoodItemId == foodItemId).FirstOrDefaultAsync();
             if (menuFoodItem == null)
             {
                 return NotFound();
@@ -118,9 +121,13 @@ namespace ThAmCo.Catering.Controllers
             return NoContent();
         }
 
-        private bool MenuFoodItemExists(int id)
+        #endregion
+
+        #region Private Methods
+        private bool MenuFoodItemExists(int menuId, int foodItemId)
         {
-            return _context.MenuFoodItem.Any(e => e.MenuId == id);
+            return _context.MenuFoodItem.Any(e => e.MenuId == menuId && e.FoodItemId == foodItemId);
         }
+        #endregion
     }
 }

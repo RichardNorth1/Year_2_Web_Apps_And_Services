@@ -9,8 +9,11 @@
 <h2>Number Of Guests: @Model.Count()</h2>
 
 <p>
-    <a asp-action="Create" asp-route-eventId=@ViewData["EventId"]>Add A Guest To This Booking</a>
+    <a asp-action="Create" asp-route-eventId=@ViewData["EventId"]>Add A Guest To This Booking</a> | 
+    <a asp-controller="Guests" asp-action="Create">Create New Guest</a> | 
+    <a asp-controller="Events" asp-action="Index">Back To Event List</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -33,9 +36,8 @@
                 @Html.DisplayFor(modelItem => item.Attended)
             </td>
             <td>
-                    @Html.ActionLink("Edit", "Edit", new { eventId=item.EventId, guestId=item.GuestId }) |
-                    @*@Html.ActionLink("Details", "Details", new { eventId=item.EventId, guestId=item.GuestId }) |*@
-                    @Html.ActionLink("Delete", "Delete", new { eventId=item.EventId, guestId=item.GuestId })
+                    @Html.ActionLink("Add Attendance", "Edit", new { eventId=item.EventId, guestId=item.GuestId }) |
+                    @Html.ActionLink("Remove Guest From Event", "Delete", new { eventId=item.EventId, guestId=item.GuestId })
             </td>
         </tr>
 }

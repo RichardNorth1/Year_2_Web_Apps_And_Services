@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ThAmCo.Events.Data;
 using ThAmCo.Events.DTOs;
@@ -12,19 +13,6 @@ namespace ThAmCo.Events.Models
         {
         }
 
-        //public EventViewModel(Event e)
-        //{
-        //    EventId = e.EventId;
-        //    EventDate = e.EventDate;
-        //    EventName = e.EventName;
-        //    EventType = e.EventType;
-        //    VenueName = e.VenueName;
-        //    ClientReferenceId = e.ClientReferenceId;
-        //    Reference = e.Reference;
-        //    HasRequiredStaff = (bool)e.HasRequiredStaff;
-        //    HasFirstAider = (bool)e.HasFirstAider;
-        //}
-
         public EventViewModel(Event e)
         {
             EventId = e.EventId;
@@ -34,74 +22,75 @@ namespace ThAmCo.Events.Models
             VenueName = e.VenueName;
             Reference = e.Reference;
             EventType = e.EventType;
-            EventDate = DateOnly.FromDateTime(e.EventDate);
+            EventDate = DateOnly.FromDateTime(e.EventDate).ToString();
             ClientReferenceId = e.ClientReferenceId;
             MenuForEvent = e.MenuForEvent;
+            EventCost = "£" + e.EventCost;
+            EventDuration = e.EventDuration;
         }
 
-
-        //public int EventId { get; set; }
-        //public int MenuId { get; set; }
-        //public string VenueName { get; set; }
-        //public int GuestCount { get; set; }
-        //public int StaffCount { get; set; }
-        //public DateOnly EventDateStart { get; set; }
-        //public DateOnly EventDateEnd { get; set; }
-        //public DateTime EventDate { get; set; }
-        //public string EventName { get; set; }
-        //public int ClientReferenceId { get; set; }
-        //public string Reference { get; set; }
-        //public string EventTypeId { get; set; }
-
-        //public bool? HasFirstAider { get; set; }
-        //public bool? HasRequiredStaff { get; set; }
-        //public List<GuestBookingViewModel> GuestBookings { get; set; }
-        //public List<StaffingViewModel> Staffs { get; set; }
-
-        //public int MenuId { get; set; }
-        //public DateOnly EventDateStart { get; set; }
-        //public DateOnly EventDateEnd { get; set; }
-        //public string SelectedEventDate { get; set; }
-        //public string SelectedEventTypeId { get; set; }
-        //public string SelectedMenuId { get; set; }
-
         #region EventFields
-
+        [DisplayName("Event ID:"), Description("The Event ID For This Event")]
         public int EventId { get; set; }
 
+        [Required, DisplayName("Event Name:"), Description("The Name Of The Event e.g The Annual Developer Conference")]
         public string EventName { get; set; }
 
+        [DisplayName("First Aider Assigned:")]
         public bool HasFirstAider { get; set; }
 
+        [DisplayName("Required Staff assigned:")]
         public bool HasRequiredStaff { get; set; }
 
+        [Required, DisplayName("Event Duration in hours:")]
+        public int EventDuration { get; set; }
+
+        //[DisplayName("Event Total Cost:")]
+        //public decimal EventCost { get; set; }
+
+
+        [DisplayName("Event Total Cost:")]
+        public string EventCost { get; set; }
+
+        [DisplayName("Total Guests For This Booking:")]
         public int GuestCount { get; set; }
+
+        [DisplayName("Total Staff Assigned To This Event:")]
         public int StaffCount { get; set; }
 
-        public List<GuestBooking> GuestBookings { get; set; }
+        [DisplayName("Guests Booked For This Event: ")]
+        public List<GuestViewModel> GuestBookings { get; set; }
 
-        public List<Staffing> Staffs { get; set; }
+        [DisplayName("Staff Assigned To This Event: ")]
+        public List<StaffViewModel> Staffing { get; set; }
 
         #endregion
 
         #region VenuesData
 
+        [DisplayName("Venue Name: ")]
         public string VenueName { get; set; }
 
+        [DisplayName("Booking Reference: ")]
         public string Reference { get; set; }
 
+        [DisplayName("Event Type: ")]
         public string EventType { get; set; }
 
-        public DateOnly EventDate { get; set; }
+        [DisplayName("Event Date:")]
+        public string EventDate { get; set; }
 
         #endregion
 
         #region CateringData
 
         // ID from food booking table in the catering DB
+        [DisplayName("Event Food Booking Reference:")]
         public int ClientReferenceId { get; set; }
 
+        [DisplayName("Menu For Event:")]
         public string MenuForEvent { get; set; }
+
 
         #endregion
 

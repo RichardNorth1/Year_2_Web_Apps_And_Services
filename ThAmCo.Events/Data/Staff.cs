@@ -9,7 +9,7 @@ namespace ThAmCo.Events.Data
         }
 
         public Staff(int staffId, string forename, 
-            string surname, EmployeeType jobRole, 
+            string surname, string jobRole, 
             bool isFirstAider, string email, 
             string password)
         {
@@ -33,7 +33,7 @@ namespace ThAmCo.Events.Data
         [Required]
         public bool FirstAidQualified { get;set; }
         [Required]
-        public EmployeeType JobRole { get; set; }
+        public string JobRole { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]

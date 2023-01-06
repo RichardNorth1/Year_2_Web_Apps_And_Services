@@ -18,17 +18,43 @@ namespace ThAmCo.Events.Controllers
         {
             _context = context;
         }
-
+        #region Index
+        /// <summary>
+        /// TThis method is designed to find all members of staff currently stored 
+        /// within the database. after all members of staff have been located it is 
+        /// then transformed in to a collection of staff view models and then 
+        /// displayed in the view
+        /// </summary>
+        /// <returns>a collection of staff view models to the view</returns>
         // GET: Staffs
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Staff.ToListAsync());
+            var allStaff = await _context.Staff.ToListAsync();
+            var VM = allStaff.Select(s => new StaffViewModel(s));
+              return View(VM);
         }
 
+        #endregion
+
+        #region Details
+
+        /// <summary>
+        /// This method is used to display the details of a specific staff member. 
+        /// This is achieved by finding the corresponding member of staff to the 
+        /// Staff ID that is provided with the parameter this member of staff is 
+        /// then transformed into a staff view model and then displayed in the view
+        /// </summary>
+        /// <param name="staffId"></param>
+        /// <returns>a staff view model to the view if successful otherwise returns not found</returns>
         // GET: Staffs/Details/5
         public async Task<IActionResult> Details(int? staffId)
         {
-            if (staffId == null || _context.Staff == null)
+            // find the member of staff
+            var staff = await _context.Staff
+                .Where(s => s.StaffId == staffId)
+                .FirstOrDefaultAsync();
+            // if staff doesnt exist return not found
+            if (staff == null)
             {
                 return NotFound();
             }
@@ -38,71 +64,97 @@ namespace ThAmCo.Events.Controllers
                 .Include(s => s.Event)
                 .Where(s => s.StaffId == staffId)
                 .ToListAsync();
-            //IEnumerable<EventViewModel> events = 
-            // get the individual staff member
-            var staff = await _context.Staff
-                .FirstOrDefaultAsync(m => m.StaffId == staffId);
 
+            // transform the staff member to a staff member view model
             var VM = new StaffViewModel(staff);
-            VM.Events = staffsUpComingEvents.Select(e => new EventViewModel(e.Event));
-            if (staff == null)
-            {
-                return NotFound();
-            }
+            VM.Events = staffsUpComingEvents.Select(e => new EventViewModel(e.Event)).ToList();
+
 
             return View(VM);
         }
 
+        #endregion
+
+        #region Create
+
+        /// <summary>
+        /// This method is designed to return the CREATE view for creating a new staff member
+        /// </summary>
+        /// <returns>a CREATE view</returns>
         // GET: Staffs/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new StaffViewModel());
         }
 
+        /// <summary>
+        /// This method is used to create a new staff member based on the details provided to
+        /// the view. Once the staff member has been created the staff member is then added to 
+        /// the database and the changes are saved.
+        /// </summary>
+        /// <param name="staff"></param>
+        /// <returns>redirects the user to INDEX if successful otherwise returns the invalid staff creation to the user</returns>
         // POST: Staffs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StaffId,Forename,Surname,JobRole,Email,Password")] Staff staff)
+        public async Task<IActionResult> Create(StaffViewModel VM)
         {
+            var staff = new Staff { Forename = VM.Forename, 
+                Surname = VM.Surname, 
+                Email = VM.Email, 
+                FirstAidQualified = VM.SelectedQualifiedValue == "yes", 
+                JobRole = VM.JobRole, 
+                Password = VM.Password };
             if (ModelState.IsValid)
             {
                 _context.Add(staff);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new {staffId = staff.StaffId});
+                return RedirectToAction(nameof(Index));
             }
-            return View(staff);
+            return View(VM);
         }
 
-        // GET: Staffs/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Staff == null)
-            {
-                return NotFound();
-            }
+        #endregion
 
-            var staff = await _context.Staff.FindAsync(id);
+        #region Edit
+        /// <summary>
+        /// This method is designed to find the staff member the user wishes to edit and then transforms the staff member into a staff view model to be displayed in the view
+        /// </summary>
+        /// <param name="staffId"></param>
+        /// <returns>a staff view model to the view</returns>
+        // GET: Staffs/Edit/5
+        public async Task<IActionResult> Edit(int staffId)
+        {
+            var staff = await _context.Staff
+                .Where(s => s.StaffId == staffId)
+                .FirstOrDefaultAsync();
             if (staff == null)
             {
                 return NotFound();
             }
-            return View(staff);
+            var VM = new StaffViewModel(staff);
+            return View(VM);
         }
 
+        /// <summary>
+        /// This method is designed to apply the changes that the user has made to a staff 
+        /// member and then save the changes made to the staff member to the database.
+        /// </summary>
+        /// <param name="staff"></param>
+        /// <returns>redirects the user to the INDEX view if successful otherwise returns the invalid staff edit</returns>
         // POST: Staffs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StaffId,Forename,Surname,JobRole,Email,Password")] Staff staff)
-        {
-            if (id != staff.StaffId)
-            {
-                return NotFound();
-            }
-
+        public async Task<IActionResult> Edit(StaffViewModel VM)
+        { 
+            var staff = new Staff {StaffId = VM.StaffId, Forename = VM.Forename, 
+                Surname =VM.Surname, Email = VM.Email, 
+                FirstAidQualified = VM.FirstAidQualified, 
+                JobRole = VM.JobRole, Password = VM.Password };
             if (ModelState.IsValid)
             {
                 try
@@ -125,35 +177,45 @@ namespace ThAmCo.Events.Controllers
             }
             return View(staff);
         }
+        #endregion
 
+        #region Delete
+        /// <summary>
+        /// This method is designed to find the corresponding staff member to the staff ID
+        /// supplied in the parameters once the staff member is located it is then transformed 
+        /// into a staff view model to be displayed in the view for confirmation of deletion.
+        /// </summary>
+        /// <param name="staffId"></param>
+        /// <returns>a staff view model to the view if succesful otherwise returns not found</returns>
         // GET: Staffs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int staffId)
         {
-            if (id == null || _context.Staff == null)
-            {
-                return NotFound();
-            }
-
             var staff = await _context.Staff
-                .FirstOrDefaultAsync(m => m.StaffId == id);
+                .Where(s => s.StaffId == staffId)
+                .FirstOrDefaultAsync();
             if (staff == null)
             {
                 return NotFound();
             }
-
-            return View(staff);
+            var VM = new StaffViewModel(staff);
+            return View(VM);
         }
 
+        /// <summary>
+        /// This method is designed to locate a staff member in the database and then 
+        /// remove them after conformation has been given then the changes are saved 
+        /// to the database.
+        /// </summary>
+        /// <param name="staffId"></param>
+        /// <returns>redirects the user to the INDEX view if successful</returns>
         // POST: Staffs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int staffId)
         {
-            if (_context.Staff == null)
-            {
-                return Problem("Entity set 'EventsDBContext.Staff'  is null.");
-            }
-            var staff = await _context.Staff.FindAsync(id);
+            var staff = await _context.Staff
+                .Where(s => s.StaffId == staffId)
+                .FirstOrDefaultAsync();
             if (staff != null)
             {
                 _context.Staff.Remove(staff);
@@ -163,9 +225,19 @@ namespace ThAmCo.Events.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        #endregion
+
+        #region private methods
+        /// <summary>
+        /// This method is designed to determine wether a staff member exists in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>true if the staff member exists otherwise returns false</returns>
         private bool StaffExists(int id)
         {
           return _context.Staff.Any(e => e.StaffId == id);
         }
+
+        #endregion
     }
 }

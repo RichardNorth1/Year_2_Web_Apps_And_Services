@@ -15,15 +15,15 @@ function loadEventType() {
         type: "GET",
 
         success: function (result) {
-            $('#SelectedEventTypeId').html('');     // Empty select list
+            $('#SelectedEventType').html('');     // Empty select list
             var options = '';
-            options += '<option value="Select">Select venue</option>';
+            
 
             for (var i = 0; i < result.length; i++) {
-                options += '<option value="' + result[i].id + '">' +
+                options += '<option value="' + result[i].id + "," + result[i].title  + '">' +
                     result[i].title + '</option>';
             }
-            $('#SelectedEventTypeId').append(options);
+            $('#SelectedEventType').append(options);
         },
         error: function () {
             alert("Unable to load event types.");
@@ -36,14 +36,14 @@ function loadMenus() {
         type: "GET",
 
         success: function (result) {
-            $('#SelectedMenuId').html('');     // Empty select list
+            $('#SelectedMenuIdAndName').html('');     // Empty select list
             var options = '';
-            options += '<option value="0">Catering Not Required</option>';
+            options += '<option value="0,No Catering">Catering Not Required</option>';
             for (var i = 0; i < result.length; i++) {
-                options += '<option value="' + result[i].menuId + '">' +
+                options += '<option value="' + result[i].menuId + "," + result[i].menuName + '">' +
                     result[i].menuName + '</option>';
             }
-            $('#SelectedMenuId').append(options);
+            $('#SelectedMenuIdAndName').append(options);
         },
         error: function () {
             alert("Unable to load Menus.");
@@ -54,7 +54,7 @@ function loadMenus() {
 function loadAvailableDates() {
     $.ajax({
         //api/Availability?eventType=WED&beginDate=2022-11-01&endDate=2022-11-30
-        url: "https://localhost:7088/api/Availability?eventType=" + $("#SelectedEventTypeId").val() + "&beginDate="
+        url: "https://localhost:7088/api/Availability?eventType=" + $("#SelectedEventType").val().split(',')[0] + "&beginDate="
             + $("#EventDateStart").val() + "&endDate=" + $("#EventDateEnd").val(),
         type: "GET",
         success: function (result) {
@@ -62,16 +62,13 @@ function loadAvailableDates() {
             $('#EventDate').html('');     // Empty select list
             var options = '';
 
-            options += '<option value="Select">Select venue</option>';
-
             for (var i = 0; i < result.length; i++) {
 
-                options += '<option value="' + result[i].date + "," + result[i].code + "," + result[i].name + '">' + "Date: " +
+                options += '<option value="' + result[i].date + "," + result[i].code + "," + result[i].name + "," + result[i].costPerHour + '">' + "Date: " +
                     result[i].date.split('T')[0] + "  Venue: " + result[i].name + "  Seating capacity: " +
                     result[i].capacity + "  Cost: £" + result[i].costPerHour + " per hour " +
                     '</option>';
             }
-            alert(result)
             alert(options)
             $('#SelectedEventDate').append(options);
             $('#SelectedEventDate').removeAttr("disabled")

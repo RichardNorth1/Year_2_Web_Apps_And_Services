@@ -75,9 +75,9 @@ namespace ThAmCo.Events.Data
             modelBuilder.Entity<Event>()
                 .HasData(
                 //20221107CRKHL
-                new Event(1, "The North Family Birthday bash", 1, "Reference1234"),
+                new Event(1, "The North Family Birthday bash", 1, "Reference1234", 1, 3),
                 //20221106TNDMR
-                new Event(2, "The annual golf meet up", 2, "Reference2345")
+                new Event(2, "The annual golf meet up", 2, "Reference2345", 2, 2)
                 );
 
 
@@ -105,12 +105,12 @@ namespace ThAmCo.Events.Data
 
             modelBuilder.Entity<Staff>()
                 .HasData(
-                new Staff(1, "Chelsea", "Copland", EmployeeType.MANAGER, true, "chelseacopeland@email.com", "password"),
-                new Staff(2, "michelle", "Copland", EmployeeType.TEAMMEMBER, false, "michellecopeland@email.com", "password"),
-                new Staff(3, "Carly", "Copland", EmployeeType.TEAMMEMBER, false, "Carlycopeland@email.com", "password"),
-                new Staff(4, "ciara", "Copland", EmployeeType.TEAMMEMBER, true, "ciaracopeland@email.com", "password"),
-                new Staff(5, "anna", "Copland", EmployeeType.TEAMMEMBER, false, "annacopeland@email.com", "password"),
-                new Staff(6, "dee", "Copland", EmployeeType.TEAMLEADER, true, "deecopeland@email.com", "password")
+                new Staff(1, "Chelsea", "Copland", "Manager", true, "chelseacopeland@email.com", "password"),
+                new Staff(2, "michelle", "Copland", "Team Member", false, "michellecopeland@email.com", "password"),
+                new Staff(3, "Carly", "Copland", "Team Member", false, "Carlycopeland@email.com", "password"),
+                new Staff(4, "ciara", "Copland", "Team Member", true, "ciaracopeland@email.com", "password"),
+                new Staff(5, "anna", "Copland", "Team Member", false, "annacopeland@email.com", "password"),
+                new Staff(6, "dee", "Copland", "Team Leader", true, "deecopeland@email.com", "password")
                 );
 
             modelBuilder.Entity<Staffing>()
