@@ -189,11 +189,6 @@ namespace ThAmCo.Events.Controllers
         // GET: Guests/Edit/5
         public async Task<IActionResult> Edit(int guestId)
         {
-            //if (_context.Guest == null)
-            //{
-            //    return NotFound();
-            //}
-
             var guest = await _context.Guest
                 .Where(g => g.GuestId == guestId)
                 .FirstOrDefaultAsync();

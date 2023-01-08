@@ -9,20 +9,25 @@
 <h2>Number Of Guests: @Model.Count()</h2>
 
 <p>
-    <a asp-action="Create" asp-route-eventId=@ViewData["EventId"]>Add A Guest To This Booking</a> | 
-    <a asp-controller="Guests" asp-action="Create">Create New Guest</a> | 
+    <a asp-action="CreateNew" asp-route-eventId="@ViewData["EventId"]">Add Guest To This Event</a>  | 
+    <a asp-controller="Guests" asp-action="Create">Create New Guest</a>  |  
     <a asp-controller="Events" asp-action="Index">Back To Event List</a>
+
 </p>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Guest)
+                @Html.DisplayNameFor(model => model.Guest.FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Attended)
+                @Html.DisplayNameFor(model => model.Guest.Email)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AttendedString)
+            </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -30,14 +35,31 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Guest.Forename)
+                @Html.DisplayFor(modelItem => item.Guest.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Attended)
+                @Html.DisplayFor(modelItem => item.Guest.Email)
             </td>
             <td>
-                    @Html.ActionLink("Add Attendance", "Edit", new { eventId=item.EventId, guestId=item.GuestId }) |
-                    @Html.ActionLink("Remove Guest From Event", "Delete", new { eventId=item.EventId, guestId=item.GuestId })
+                @Html.DisplayFor(modelItem => item.AttendedString)
+            </td>
+            <td>
+                @if(item.Attended){
+                        <button class="btn btn-primary" onclick="location.href='@Url.Action("AddAttendence",
+                    new {guestId = item.GuestId, eventId = item.EventId, attended = false})'" type="button">
+                            Guest Did Not Attend
+                        </button>
+                }
+                else
+                {
+                    <button class="btn btn-primary" onclick="location.href='@Url.Action("AddAttendence",
+                    new {guestId = item.GuestId, eventId = item.EventId, attended = true})'" type="button">
+                            Guest Attended
+                        </button>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Remove Guest From Event", "Delete", new { eventId=item.EventId, guestId=item.GuestId })
             </td>
         </tr>
 }

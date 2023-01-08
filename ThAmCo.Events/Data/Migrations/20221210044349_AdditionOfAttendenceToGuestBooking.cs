@@ -9,7 +9,7 @@ namespace ThAmCo.Events.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "Attended",
+                name: "AttendedString",
                 table: "GuestBooking",
                 type: "INTEGER",
                 nullable: false,
@@ -19,7 +19,7 @@ namespace ThAmCo.Events.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Attended",
+                name: "AttendedString",
                 table: "GuestBooking");
         }
     }

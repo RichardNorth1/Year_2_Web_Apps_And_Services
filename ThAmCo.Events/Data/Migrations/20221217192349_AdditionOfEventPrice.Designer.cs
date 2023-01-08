@@ -187,7 +187,7 @@ namespace ThAmCo.Events.Data.Migrations
                     b.Property<int>("GuestId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Attended")
+                    b.Property<bool>("AttendedString")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDeleted")

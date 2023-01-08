@@ -17,14 +17,16 @@ namespace ThAmCo.Events.Models
             EventId = gb.EventId;
             Guest = new GuestViewModel(gb.Guest);
             Event = new EventViewModel(gb.Event);
-            Attended = gb.Attended ? "Attended" : "Did Not Attend";
+            Attended = gb.Attended;
+            AttendedString = gb.Attended ? "AttendedString" : "Did Not Attend";
             AttendenceList = new List<SelectListItem> { 
                 new SelectListItem { Text = "Yes", Value = "yes" },
                 new SelectListItem { Text = "No", Value = "no" } };
         }
 
         [DisplayName("Guest Attendence")]
-        public string Attended { get; set; }
+        public string AttendedString { get; set; }
+        public bool Attended { get; set; }
         public int GuestId { get; set; }
         public GuestViewModel Guest { get; set; }
         public int EventId { get; set; }

@@ -16,8 +16,8 @@
             <input type="hidden" asp-for="EventId" />
             <div>
                 
-                <label asp-for="Attended" class="control-label"> Guest Attened</label>
-                <select asp-for="Attended" class="form-control" asp-items="@Model.AttendenceList"></select>
+                <label asp-for="AttendedString" class="control-label"> Guest Attened</label>
+                <select asp-for="AttendedString" class="form-control" asp-items="@Model.AttendenceList"></select>
             </div>
             
 
@@ -36,7 +36,7 @@
     <script>
         $(document).ready(function () {
             $("#Attened").click(function () {
-                @Model.Attended = true;
+                @Model.AttendedString = true;
             });
             $("#NotAttened").click(function () {
                 ("#Attended") = false;

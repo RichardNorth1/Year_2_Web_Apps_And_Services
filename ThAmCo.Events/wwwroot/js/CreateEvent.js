@@ -69,7 +69,6 @@ function loadAvailableDates() {
                     result[i].capacity + "  Cost: £" + result[i].costPerHour + " per hour " +
                     '</option>';
             }
-            alert(options)
             $('#SelectedEventDate').append(options);
             $('#SelectedEventDate').removeAttr("disabled")
             return;

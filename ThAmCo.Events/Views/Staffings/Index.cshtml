@@ -7,8 +7,10 @@
 <h1>@ViewData["EventBookingName"]</h1>
 
 <p>
-    <a asp-action="Create" asp-route-eventId="@ViewData["EventId"]">Create New</a> |
+    <a asp-action="CreateNew" asp-route-eventId="@ViewData["EventId"]">Assign Member Of Staff To Event</a> |
     <a asp-controller="Events" asp-action="Index">Back To Event List</a>
+     
+
 </p>
 
 @if ((bool)ViewData["HasRequiredStaff"] == false && (bool)@ViewData["HasFirstAider"] == false)
@@ -45,10 +47,16 @@ else if ((bool)ViewData["HasRequiredStaff"] == false)
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Staff)
+                @Html.DisplayNameFor(model => model.Staff.FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event)
+                @Html.DisplayNameFor(model => model.Staff.JobRole)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Staff.FirstAidQualified)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Staff.Email)                
             </th>
             <th></th>
         </tr>
@@ -56,17 +64,23 @@ else if ((bool)ViewData["HasRequiredStaff"] == false)
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Staff.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Event.EventId)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.JobRole)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.FirstAidQualifiedString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.Email)
+                </td>
             <td>
 @*                    <a asp-action="Edit" asp-route-id="@item.EventId">Edit</a>
-                    @Html.ActionLink("Edit", "Edit", new { eventId=item.EventId, staffId = item.StaffId }) |*@
-                    @Html.ActionLink("Details", "Details", new { eventId=item.EventId, staffId = item.StaffId }) |
-                @Html.ActionLink("Delete", "Delete", new { eventId=item.EventId, staffId = item.StaffId })
+                    @Html.ActionLink("Edit", "Edit", new { eventId=item.EventId, staffId = item.StaffId }) |
+                @Html.ActionLink("Details", "Details", new { eventId=item.EventId, staffId = item.StaffId }) |*@
+                @Html.ActionLink("Remove Staff Member", "Delete", new { eventId=item.EventId, staffId = item.StaffId })
             </td>
         </tr>
 }

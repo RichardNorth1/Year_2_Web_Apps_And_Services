@@ -215,6 +215,110 @@ namespace ThAmCo.Events.Controllers
         }
         #endregion
 
+        #region Experimental
+
+        /// <summary>
+        /// This method is used to assign staff members to an event this is achieved 
+        /// by first loading in all staff members currently assigned to an event and 
+        /// storing the IDs in a collection this list of IDs is then used to filter 
+        /// out any staff memebers that are already assigned to the event and then 
+        /// the list of not assigned staff is converted into a select list to be 
+        /// used in the view
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns>a staffing view model to the CREATE view otherwise not found is returned</returns>
+        // GET: Staffings/Create
+        public async Task<IActionResult> CreateNew(int eventId)
+        {
+            if (!EventExists(eventId))
+            {
+                return NotFound();
+            }
+            // find all staff currently assigned
+            var staffingForEvent = await _context.Staffing
+                .Where(gb => gb.EventId == eventId).ToListAsync();
+
+
+            // create a list of IDs from the assigned staff
+            var listOfIds = staffingForEvent.Select(g => g.StaffId).ToList();
+
+            // create list that doesnt contain those already booked
+            var staff = await _context.Staff
+                .Where(s => !listOfIds.Contains(s.StaffId))
+                .ToListAsync();
+
+            // create the view model
+            var VM = staff.Select(s => new StaffViewModel(s));
+
+            //ViewData["EventBookingName"] = eventBooking.EventName;
+            ViewData["EventId"] = eventId;
+
+            return View(VM);
+        }
+
+        /// <summary>
+        /// This method is used to create a new staff assignment which is achieved
+        /// by determining which staff member the user wants to asssign to an event 
+        /// from the select list after this the staff ID value which was assigned to 
+        /// options provided in the select list. Once the staff ID has been obtained
+        /// a new staffing object is created based on this and is then added to the 
+        /// database and the changes are then saved.
+        /// </summary>
+        /// <param name="VM"></param>
+        /// <returns>redirects the user to the INDEX view otherwise the invalid selection is returned</returns>
+        public async Task<IActionResult> CreateNewStaff(int staffId, int eventId)
+        {
+            if (ModelState.IsValid)
+            {
+                // assign the staff member to the event
+                var staffing = new Staffing
+                {
+                    EventId = eventId,
+                    StaffId = staffId
+                };
+                try
+                {
+                    // save newly assigned staff member
+                    _context.Add(staffing);
+                    await _context.SaveChangesAsync();
+
+                    // check if that member of staff is first aid qualified
+                    var addedStaff = await _context.Staff.FindAsync(staffing.StaffId);
+
+                    if (addedStaff.FirstAidQualified)
+                    {
+                        // get the event assigned to and update the HasFirstAider value
+                        var eventToUpdate = await _context.Event.FindAsync(staffing.EventId);
+                        eventToUpdate.HasFirstAider = true;
+                        _context.Update(eventToUpdate);
+                    }
+
+                    // check if the event has enough staff
+                    var amountOfGuests = await _context.GuestBooking.Where(gb => gb.EventId == staffing.EventId).CountAsync();
+                    var amountOfStaff = await _context.Staffing.Where(s => s.EventId == staffing.EventId).CountAsync();
+
+                    // if required amount less than or equal to the amount of staff
+                    if ((float)amountOfGuests / 10 <= amountOfStaff)
+                    {
+                        var eventToUpdate = await _context.Event.FindAsync(staffing.EventId);
+                        eventToUpdate.HasRequiredStaff = true;
+                        _context.Update(eventToUpdate);
+                    }
+                    // save changes
+                    await _context.SaveChangesAsync();
+
+                    
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(CreateNew), new { eventId = eventId });
+        }
+
+        #endregion
+
         #region Edit
 
         //// GET: Staffings/Edit/5

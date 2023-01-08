@@ -153,7 +153,7 @@ namespace ThAmCo.Events.Controllers
         { 
             var staff = new Staff {StaffId = VM.StaffId, Forename = VM.Forename, 
                 Surname =VM.Surname, Email = VM.Email, 
-                FirstAidQualified = VM.FirstAidQualified, 
+                FirstAidQualified = VM.SelectedQualifiedValue == "yes", 
                 JobRole = VM.JobRole, Password = VM.Password };
             if (ModelState.IsValid)
             {
@@ -161,6 +161,50 @@ namespace ThAmCo.Events.Controllers
                 {
                     _context.Update(staff);
                     await _context.SaveChangesAsync();
+                    // find all events this staff member is assigned to
+                    var eventsToUpdate = await _context.Staffing
+                        .Include(s => s.Event)
+                        .Where(s => s.StaffId == staff.StaffId)
+                        .ToListAsync();
+
+                    // check if they currently have any events
+                    if (eventsToUpdate != null)
+                    {
+                        // if staff is now first aid qualified update all of their events to reflect this
+                        if (staff.FirstAidQualified)
+                        {
+                            // iterate through their events
+                            foreach(var events in eventsToUpdate)
+                            {
+
+                                // update the events that didnt already have a first aider
+                                if (!(bool)events.Event.HasFirstAider)
+                                {
+                                    events.Event.HasFirstAider = true;
+                                    _context.Update(events);
+                                }
+                            }
+                            
+                        }
+                        else
+                        {
+                            // iterate through their events
+                            foreach (var events in eventsToUpdate)
+                            {
+                                // load all staff assigned to this event
+                                var staffAssignedToEvent = await _context.Staffing
+                                    .Include(s => s.Staff)
+                                    .Where(s => s.EventId == events.EventId)
+                                    .ToListAsync();
+                                if (!staffAssignedToEvent.Any(s => s.Staff.FirstAidQualified))
+                                {
+                                    events.Event.HasFirstAider = false;
+                                    _context.Update(events);
+                                }
+                            }
+                        }
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -219,12 +263,44 @@ namespace ThAmCo.Events.Controllers
             if (staff != null)
             {
                 _context.Staff.Remove(staff);
+                // find all events this staff member is assigned to
+                var eventsToUpdate = await _context.Staffing
+                    .Include(s => s.Event)
+                    .Where(s => s.StaffId == staff.StaffId)
+                    .ToListAsync();
+
+
+
+                // check if they currently have any events
+                if (eventsToUpdate != null)
+                {
+                    // iterate through their events
+                    foreach (var events in eventsToUpdate)
+                    {
+                        // load all staff assigned to this event other than the staff member for deletion
+                        var staffAssignedToEvent = await _context.Staffing
+                            .Include(s => s.Staff)
+                            .Where(s => s.EventId == events.EventId && s.StaffId != staff.StaffId)
+                            .ToListAsync();
+                        // if no first aider is assigned set value to false
+                        if (!staffAssignedToEvent.Any(s => s.Staff.FirstAidQualified))
+                        {
+                            events.Event.HasFirstAider = false;
+                            _context.Update(events);
+                        }
+                        // remove the staff member assignment to the event
+                        _context.Remove(events);
+                    }
+                    
+                    
+                }
+
+                await _context.SaveChangesAsync();
+                
+
             }
-            
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         #endregion
 
         #region private methods

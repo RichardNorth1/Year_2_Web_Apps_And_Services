@@ -948,3 +948,4 @@ C:\Users\Student\OneDrive - Teesside University\Year 2\Web Apps and Services\ICA
 C:\Users\Student\OneDrive - Teesside University\Year 2\Web Apps and Services\ICA Work\ThAmCo_ICA_04_01_2023\ThAmCo\ThAmCo\ThAmCo.Events\obj\Debug\net6.0\ThAmCo.Events.pdb
 C:\Users\Student\OneDrive - Teesside University\Year 2\Web Apps and Services\ICA Work\ThAmCo_ICA_04_01_2023\ThAmCo\ThAmCo\ThAmCo.Events\obj\Debug\net6.0\ThAmCo.Events.genruntimeconfig.cache
 C:\Users\Student\OneDrive - Teesside University\Year 2\Web Apps and Services\ICA Work\ThAmCo_ICA_04_01_2023\ThAmCo\ThAmCo\ThAmCo.Events\obj\Debug\net6.0\ref\ThAmCo.Events.dll
+C:\Users\Student\OneDrive - Teesside University\Year 2\Web Apps and Services\ICA Work\ThAmCo_ICA_04_01_2023\ThAmCo\ThAmCo\ThAmCo.Events\bin\Debug\net6.0\System.Reflection.MetadataLoadContext.dll

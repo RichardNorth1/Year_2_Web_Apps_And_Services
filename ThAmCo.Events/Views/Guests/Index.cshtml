@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Guest Records</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateNew" asp-route-eventId="@ViewData["#EventId"]">Create New Guest</a>
 </p>
 <table class="table">
     <thead>

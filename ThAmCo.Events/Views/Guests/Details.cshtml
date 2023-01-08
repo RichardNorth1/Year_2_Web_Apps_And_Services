@@ -4,10 +4,14 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Guest Details</h1>
 
 <div>
-    <h4>Guest</h4>
+    <a asp-action="Edit" asp-route-guestId="@Model.GuestId">Edit This Guest</a> | 
+    <a asp-action="Index">Back To Guest Records</a>
+</div>
+
+<div>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -42,6 +46,11 @@
         </dd>
     </dl>
 </div>
+<div>
+    <hr />
+    <h4>Event Bookings</h4>
+    <hr />
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -67,14 +76,11 @@
                     @Html.DisplayFor(modelItem => item.Event.EventDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Attended)
+                    @Html.DisplayFor(modelItem => item.AttendedString)
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<div>
-    <a asp-action="Edit" asp-route-guestId="@Model.GuestId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

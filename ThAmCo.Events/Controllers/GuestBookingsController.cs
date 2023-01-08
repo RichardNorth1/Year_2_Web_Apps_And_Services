@@ -48,7 +48,8 @@ namespace ThAmCo.Events.Controllers
                 EventId = g.EventId, 
                 GuestId = g.GuestId, 
                 Guest = new GuestViewModel(g.Guest),
-                Attended = g.Attended == true? "Yes": "No" });
+                Attended = g.Attended,
+                AttendedString = g.Attended == true? "Yes": "No" });
             // pass event details to view for a better user experience
             ViewData["EventBookingName"] = eventBooking.EventName;
             ViewData["EventId"] = eventId;
@@ -180,6 +181,98 @@ namespace ThAmCo.Events.Controllers
         }
         #endregion
 
+        #region experimental
+
+        /// <summary>
+        /// This method is used to create a new guest booking, this is achieved by searching the database to 
+        /// find all current guests, after this a list of guests that are currently signed to the event is created
+        /// then all of the guests that are already assigned are removed and this list is added to the view model to be displayed in the view
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns> guest booking view model to the view</returns>
+        // GET: GuestBookings/Create
+        public async Task<IActionResult> CreateNew(int eventId)
+        {
+
+            var guestBookingForEvent = await _context.GuestBooking
+                .Where(gb => gb.EventId == eventId).ToListAsync();
+
+            if (guestBookingForEvent == null)
+            {
+                return NotFound();
+            }
+
+            var listOfIds = guestBookingForEvent.Select(g => g.GuestId).ToList();
+
+            // create list that doesnt contain those already booked
+            var guests = await _context.Guest
+                .Where(g => !listOfIds.Contains(g.GuestId))
+                .ToListAsync();
+
+            var VM = guests.Select(g => new GuestViewModel(g));
+            ViewData["EventId"] = eventId;
+
+            return View(VM);
+        }
+
+
+        /// <summary>
+        /// This method is designed to create a new guest booking based on the guest that the user has selected 
+        /// once the guest booking has been created it is then saved to the database
+        /// </summary>
+        /// <param name="VM"></param>
+        /// <returns>the create view if unsuccessful and redirects to the index view if the creation was successful</returns>
+
+        public async Task<IActionResult> CreateNewBooking(int guestId, int eventId)
+        {
+            // check if view has been correctly filled
+            if (ModelState.IsValid)
+            {
+                // create  a new guest booking based on the selected guest
+                var guestBooking = new GuestBooking
+                {
+                    GuestId = guestId,
+                    EventId = eventId
+                };
+                try
+                {
+                    // add newly assigned guest
+                    _context.Add(guestBooking);
+
+                    // check if the event has enough staff
+                    var amountOfGuests = await _context.GuestBooking.Where(gb => gb.EventId == guestBooking.EventId).CountAsync();
+                    var amountOfStaff = await _context.Staffing.Where(s => s.EventId == guestBooking.EventId).CountAsync();
+
+                    // if required amount of staff greater and the amount of staff
+                    if ((int)Math.Ceiling((float)amountOfGuests / 10.00) > amountOfStaff)
+                    {
+                        // update if true
+                        var eventToUpdate = await _context.Event.FindAsync(guestBooking.EventId);
+                        eventToUpdate.HasRequiredStaff = false;
+                        _context.Update(eventToUpdate);
+                    }
+                    //else
+                    //{
+                    //    var eventToUpdate = await _context.Event.FindAsync(guestBooking.EventId);
+                    //    eventToUpdate.HasRequiredStaff = true;
+                    //    _context.Update(eventToUpdate);
+                    //}
+
+                    // save changes
+
+                    await _context.SaveChangesAsync();
+                    
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(CreateNew), new { eventId = eventId });
+        }
+
+        #endregion
+
         #region Edit
         /// <summary>
         /// This method is used find a specific guest booking that  is stored i the database and transform it in to a 
@@ -218,7 +311,7 @@ namespace ThAmCo.Events.Controllers
         public async Task<IActionResult> Edit(GuestBookingViewModel VM)
         {
             // if vm.attended equals yes attended is true otherwise attened is false
-            var attened = VM.Attended == "yes";
+            var attened = VM.AttendedString == "yes";
             // find the guest booking and apply the update
             var guestBooking = await _context.GuestBooking
                 .Where(gb => gb.GuestId == VM.GuestId && gb.EventId == VM.EventId)
@@ -247,6 +340,47 @@ namespace ThAmCo.Events.Controllers
         }
         #endregion
 
+        #region Add attendence
+
+
+        /// <summary>
+        /// This method is designed to update whether a guest has attended attended an event.
+        /// </summary>
+        /// <param name="VM"></param>
+        /// <returns>once the guest booking is updated the user is then redirected to the INDEX view</returns>
+        public async Task<IActionResult> AddAttendence(int guestId, int eventId, bool attended)
+        {
+
+            // find the guest booking and apply the update
+            var guestBooking = await _context.GuestBooking
+                .Where(gb => gb.GuestId == guestId && gb.EventId == eventId)
+                .FirstOrDefaultAsync();
+            //if(guestBooking != null)
+            guestBooking.Attended = attended;
+
+            try
+            {
+                // try to apply the update
+                _context.Update(guestBooking);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!GuestBookingExists(guestBooking.EventId, guestBooking.GuestId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction(nameof(Index), new { eventId = eventId });
+        }
+
+        #endregion
+
         #region Delete
         /// <summary>
         /// This method is used to find the the guest booking that the user intends to delete this
@@ -261,10 +395,6 @@ namespace ThAmCo.Events.Controllers
         // GET: GuestBookings/Delete/5
         public async Task<IActionResult> Delete(int eventId, int guestId)
         {
-            //if (id == null || _context.GuestBooking == null)
-            //{
-            //    return NotFound();
-            //}
             // find the guest booking
             var guestBooking = await _context.GuestBooking
                 .Include(g => g.Event)

@@ -52,6 +52,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3Vlc3RCb29raW5nc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Student/OneDrive - Teesside University/Year 2/Web Apps and Services/ICA Work/ThAmCo_ICA_04_01_2023/ThAmCo/ThAmCo/ThAmCo.Events/Views/GuestBookings/CreateNew.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3Vlc3RCb29raW5nc1xDcmVhdGVOZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Student/OneDrive - Teesside University/Year 2/Web Apps and Services/ICA Work/ThAmCo_ICA_04_01_2023/ThAmCo/ThAmCo/ThAmCo.Events/Views/GuestBookings/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3Vlc3RCb29raW5nc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -110,6 +114,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Student/OneDrive - Teesside University/Year 2/Web Apps and Services/ICA Work/ThAmCo_ICA_04_01_2023/ThAmCo/ThAmCo/ThAmCo.Events/Views/Staffings/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhZmZpbmdzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Student/OneDrive - Teesside University/Year 2/Web Apps and Services/ICA Work/ThAmCo_ICA_04_01_2023/ThAmCo/ThAmCo/ThAmCo.Events/Views/Staffings/CreateNew.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhZmZpbmdzXENyZWF0ZU5ldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Student/OneDrive - Teesside University/Year 2/Web Apps and Services/ICA Work/ThAmCo_ICA_04_01_2023/ThAmCo/ThAmCo/ThAmCo.Events/Views/Staffings/Delete.cshtml]

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ThAmCo.Events.Models.StaffViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Available Staff For Event</h1>
+<a asp-action="Index" asp-route-eventId="@ViewData["EventId"]">Back to Bookings</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Forename)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobRole)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstAidQualified)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Forename)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobRole)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstAidQualifiedString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <button class="btn btn-primary" onclick="location.href='@Url.Action("CreateNewStaff",
+                            new {staffId = item.StaffId, eventId = @ViewData["EventId"]})'" type="button">
+                        Assign staff member
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
